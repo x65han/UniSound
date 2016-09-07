@@ -6,6 +6,12 @@ var io = require('socket.io').listen(server);
 users = [];
 connections = []; 
 
+//Heroku Node Setup
+app.use(express.static(__dirname + ''));
+app.set('views', __dirname + '');
+app.set('view engine', 'html');
+
+//REST
 app.get('/', function(request, response) {
   response.sendFile(__dirname + '/index.html'); 
 });
