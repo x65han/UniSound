@@ -21,6 +21,24 @@ body{
   padding-left:10vw;
   padding-right:10vw;
 }
+.system{
+	position:fixed;
+	top:50px;
+	right:0px;
+	color: #00F0B5;
+	transition:all .8s ease-out;
+	text-align: center;
+	padding-top:20px;
+	font-size:12px;
+	z-index: 999;
+	border-left:2px solid #00F0B5;
+	height:100px;
+	/*width:200px;*/
+	width:0px;
+	border-top-left-radius:    24px;
+	border-bottom-left-radius: 24px;
+	background-color:black;
+}
 .container-chat{
 	transform: rotateY(180deg) rotateX(180deg);
 	border-radius:24px;
@@ -80,8 +98,38 @@ body{
 	font-size:36px;
 	background-color:transparent;
 }
-.container-register-connection{border-radius:24px;}
+.container-register-connection{border-top:2px solid red;border-radius:24px;}
 .container-register-connection:hover{transform:scale(0.8,0.8);}
+.container-channel{
+	z-index:10;
+	background: radial-gradient(#2e3238,#181818);
+	height:100vh;
+	width:100vw;
+	position:fixed;
+	left:0px;
+	top:0px;
+}
+.channel-box{
+	margin-right:5vw !important;
+	margin-left:5vw !important;
+	margin-top:5vw;
+	margin-bottom:5vw;
+}
+.channel{
+	background-color:white;width:100%;border:2px solid red;
+	padding-bottom:20px;
+	padding-top:20px;
+	padding-right:20px;
+	padding-left:20px;
+}
+.channel-top{border:2px solid black;}
+.channel-bottom{border:2px solid black;}
+.channel-bottom{}
+.channel-avatar{}
+.channel-avatar-top{}
+.channel-avatar-bottom{}
+
+
 /*Responsive Design*/
 @media screen and (max-width: 991px) {
 
