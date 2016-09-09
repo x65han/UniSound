@@ -1,0 +1,92 @@
+*{
+	font-family:'Raleway', serif;
+	animation-delay:1.5s !important;
+	transition:all 0.4s ease-out;
+}
+/*.border{border:2px solid red;}*/
+input{outline:none;padding-left:15px;font-weight:bold;}
+.background-image{
+  width:100vw;
+  position:fixed;
+	top:0;
+	left:0;
+  height:100vh;
+  z-index:-500;
+  -webkit-filter:blur(10px);
+}
+body{
+	background-color:#5ADBFF !important;
+  overflow:hidden;
+  display:inline-block;
+  padding-left:10vw;
+  padding-right:10vw;
+}
+.container-chat{
+	transform: rotateY(180deg) rotateX(180deg);
+	border-radius:24px;
+	background: radial-gradient(#2e3238,#181818);
+	height:100vh;
+	width:80vw;
+	top:0px;
+	margin-left:auto;
+	margin-right:auto;
+}
+.profile-image-container{
+	width:80px;
+	text-align:center;
+	display:block;
+	position:absolute;
+	height:80px;
+}
+.profile-image{
+	margin:auto;
+	border: 5px solid #181818;
+	border-bottom-right-radius: 50%;
+  box-shadow: #00F0B5 1px 1px 0px 1px;
+	width:100%;
+}
+.rainbow{
+	font-weight:bold;
+	background: -webkit-linear-gradient(180deg,#EE6352,#E7386F,orangered,gold,#59CD90,#5ADBFF);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+.username{
+	color:white;
+	border-radius:24px;
+	display:table;
+	float:right;
+	margin:10px;
+	padding:5px;
+	right:0;
+	border:2px solid #00F0B5;
+}
+.container-register{
+	position: absolute;
+  top: 50%;
+ 	margin-top: -200px;/* half of #content height*/
+ 	left: 0;
+ 	width: 100%;
+	text-align:center;
+}
+.register-instruction{
+	font-size:48px;
+	color:black;
+	margin-bottom:48px;
+}
+.username-input{
+	border-radius:24px;
+	margin-bottom:48px;
+	font-size:36px;
+	background-color:transparent;
+}
+.container-register-connection{border-radius:24px;}
+.container-register-connection:hover{transform:scale(0.8,0.8);}
+/*Responsive Design*/
+@media screen and (max-width: 991px) {
+
+}
+@media screen and (max-width: 767px) {
+	.container-chat{width:100vw;}
+	body{padding:0;}
+}
