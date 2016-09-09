@@ -118,25 +118,25 @@ body{
 	top:0px;
 }
 .channel-box{
-	margin-right:5vw !important;
-	margin-left:5vw !important;
-	margin-top:5vw;
-	margin-bottom:5vw;
+	margin-right:5vw !important;margin-left:5vw !important;margin-top:5vw;margin-bottom:5vw;
 }
 .channel{
-	background-color:white;width:100%;border:2px solid red;
-	padding-bottom:20px;
-	padding-top:20px;
-	padding-right:20px;
-	padding-left:20px;
+	width:280px;
+	background-color:transparent;width:100%;
+	padding-bottom:20px;padding-top:20px;
+	padding-right:20px;padding-left:20px;
 }
-.channel-top{border:2px solid black;}
-.channel-bottom{border:2px solid black;}
+.channel-top{height:100px;border-top-left-radius:24px;border-top-right-radius:24px;}
+.channel-bottom{border:2px solid #2e3238;height:100px;border-bottom-left-radius:24px;border-bottom-right-radius:24px;}
 .channel-bottom{}
-.channel-avatar{}
-.channel-avatar-top{}
-.channel-avatar-bottom{}
-
+.channel-avatar{height:80px;width:80px;border-radius:50%;transform:translateX(40px) translateY(-41px) rotate(0deg);}
+.channel-avatar-top{
+	background-color:#181818;
+	height:40px;border-top-left-radius:100px;border-top-right-radius:100px;width:80px;
+}
+.channel-avatar-bottom{
+	height:40px;border-bottom-left-radius:100px;border-bottom-right-radius:100px;width:80px;
+}
 
 /*Responsive Design*/
 @media screen and (max-width: 991px) {

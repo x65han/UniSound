@@ -1,14 +1,16 @@
 //configuration varible
+var space = ' ';
 var firstname = 'Johnson';
 var lastname = 'Han';
-var space = ' ';
 var current_user_state = 0;
-var rainbow = ['#EE6352','#E7386F','orangered','gold','#84DD63','#89FC00','#5ADBFF'];
 var backgroundImageFlashingOrder = 0;
+var rainbow = ['#EE6352','#E7386F','orangered','gold','#84DD63','#89FC00','#5ADBFF'];
+var channels = ['Sports','Movie','Food','Finance','Politics','Travel','Cars','Shopping','Career'];
+var channel  = "<div class='channel col-lg-4 col-md-4 col-sm-4 col-xs-4 border'><div class='channel-top'></div><div class='channel-bottom'><div class='channel-avatar'><div class='channel-avatar-top'></div><div class='channel-avatar-bottom'></div></div></div></div>"
 //logic
 window.onload = function(){
   $('.user-name').html(firstname + space + lastname);
-  master_state_change(1);
+  master_state_change(2);
   console.log('Ready');
   colorSwitch();
   var backgroundImageFlashing = setInterval(function(){
@@ -143,7 +145,16 @@ function system(decision,message){
   showSystemMessage(decision);
 }
 function loadChannel(decision){
+    for(var i = 0; i < channels.length;i++){
+        var pre = $('.channel-box').html();
+        $('.channel-box').html(pre + channel);
+    }
     if(decision == true){
-
+        var channel_array = document.getElementsByClassName('channel-top');
+        var channel_array_carry = document.getElementsByClassName('channel-avatar-bottom');
+        for(var x = 0; x < channel_array.length;x++){
+            channel_array[x].style.backgroundColor = rainbow[arrayIncrease(x)];
+            channel_array_carry[x].style.backgroundColor = rainbow[arrayIncrease(x)];
+        }
     }
 }
