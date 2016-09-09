@@ -6,7 +6,7 @@ var current_user_state = 0;
 var backgroundImageFlashingOrder = 0;
 var rainbow = ['#EE6352','#E7386F','orangered','gold','#84DD63','#89FC00','#5ADBFF'];
 var channels = ['Sports','Movie','Food','Finance','Politics','Travel','Cars','Shopping','Career'];
-var channel  = "<div class='channel col-lg-4 col-md-4 col-sm-4 col-xs-4 border'><div class='channel-top'></div><div class='channel-bottom'><div class='channel-avatar'><div class='channel-avatar-top'></div><div class='channel-avatar-bottom'></div></div></div></div>"
+var channel  = "<div class='channel col-lg-4 col-md-4 col-sm-4 col-xs-4 border'><div class='channel-top'>Shopping</div><div class='channel-bottom'><div class='channel-avatar'><div class='channel-avatar-top'></div><div class='channel-avatar-bottom'>5</div></div></div></div>"
 //logic
 window.onload = function(){
   $('.user-name').html(firstname + space + lastname);
