@@ -2,8 +2,16 @@
 	font-family:'Raleway', serif;
 	animation-delay:1.5s !important;
 	transition:all 0.4s ease-out;
+	-webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;
 }
 /*.border{border:2px solid red;}*/
+.highlight{
+	-webkit-user-select: text;  /* Chrome all / Safari all */
+	-moz-user-select: text;     /* Firefox all */
+	-ms-user-select: text;
+}
 input{outline:none;padding-left:15px;font-weight:bold;}
 .background-image{
   width:100vw;

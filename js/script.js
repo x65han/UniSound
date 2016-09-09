@@ -8,7 +8,7 @@ var backgroundImageFlashingOrder = 0;
 //logic
 window.onload = function(){
   $('.user-name').html(firstname + space + lastname);
-  master_state_change(2);
+  master_state_change(1);
   console.log('Ready');
   colorSwitch();
   var backgroundImageFlashing = setInterval(function(){
