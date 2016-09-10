@@ -86,9 +86,9 @@ body{
 }
 .username-input{
 	border-radius:16px;
-	-webkit-user-select: element;
-	-moz-user-select: element;
-	-ms-user-select: element;
+	-webkit-user-select: auto;
+	-moz-user-select: auto;
+	-ms-user-select: auto;
 	margin-bottom:48px;
 	font-size:36px;
 	background-color:transparent;
