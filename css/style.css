@@ -3,9 +3,9 @@
 	animation-delay:1.5s !important;
 	transition:all 0.4s ease-out;
 	font-weight: bold;
-	-webkit-user-select: none;  /* Chrome all / Safari all */
-  -moz-user-select: none;     /* Firefox all */
-  -ms-user-select: none;
+	/*-webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;*/
 }
 /*.border{border:2px solid red;}*/
 .highlightable{
@@ -85,7 +85,7 @@ body{
 	margin-bottom:48px;
 }
 .username-input{
-	border-radius:24px;
+	border-radius:16px;
 	margin-bottom:48px;
 	font-size:36px;
 	background-color:transparent;
@@ -93,16 +93,10 @@ body{
 .container-register-connection{border-top:2px solid red;border-radius:24px;cursor:pointer;}
 .container-register-connection:hover{transform:scale(0.8,0.8);cursor:pointer;}
 .container-channel{
-	z-index:10;
-	cursor:pointer;
+	z-index:10;cursor:pointer;left:0px;top:0px;
 	background: radial-gradient(#2e3238,#181818);
-	height:100vh;
-	width:100vw;
-	position:fixed;
-	left:0px;
-	overflow-x:hidden;
-	overflow-y:scroll;
-	top:0px;
+	height:100vh;width:100vw;position:fixed;
+	overflow-x:hidden;overflow-y:scroll;
 }
 .container-channel::-webkit-scrollbar {width:10px;background-color:#181818;}
 .container-channel::-webkit-scrollbar-track {box-shadow: inset 0 0 6px rgba(0,0,0,0.3);}
@@ -157,10 +151,10 @@ body{
 	font-size:12px;width:100%;float:left;margin-left:20px;
 }
 .incoming{
-	float:left;color:white;border-color:white !important;
+	float:left;
 }
 .outgoing{
-	float:right;right:0px;color:white;
+	float:right;
 }
 /*Responsive Design*/
 @media screen and (max-width: 991px) {

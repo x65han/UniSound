@@ -129,7 +129,7 @@ function colorChange(){
   $(".username-input").css('background-color',rainbow[arrayIncrease(3)]);
   $(".username-input").css('color',rainbow[backgroundImageFlashingOrder]);
   $(".container-register-connection").css('border-top-color',rainbow[arrayIncrease(3)]);
-  $(".username-input").css('border-left-color',rainbow[arrayIncrease(3)]);
+  $(".username-input").css('border-left-color','#181818');
   $(".username-input").css('border-top-color' ,rainbow[arrayIncrease(4)]);
   $(".username-input").css('border-right-color',rainbow[arrayIncrease(5)]);
   $(".username-input").css('border-bottom-color',rainbow[arrayIncrease(5)]);
