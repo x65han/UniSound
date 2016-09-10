@@ -13,28 +13,36 @@
   <script src='https://code.jquery.com/jquery-latest.min.js' type="text/javascript"></script>
   <script src="js/script.js" type="text/javascript"></script>
 </head>
-<body>
+<body id = 'body'>
+
+
 <div class='background-image'></div>
 <div class='system hidden'>Systemic Messages</div>
 
 <div class='container-register'>
     <div class='register-instruction'>What is your name:</div>
     <input class='username-input'></input><br>
-    <canvas class='container-register-connection' id='next-button' onclick='zoneTravel(1)'></canvas>
+    <canvas class='container-register-connection' id='next-button' onclick='zoneTravel(1,1)'></canvas>
 </div>
 
 <div class='container-channel'>
-  <!-- box-shadow: 1px 1px 3px #888; -->
-    <div class='row channel-box'>
-         
-    </div>
+    <div class='row channel-box'></div>
 </div>
 
 <div class='container-chat'>
     <div class='profile-image-container'>
         <img class='profile-image' src='img/profile.jpg'></img>
+        <div class='chat-topic-display'></div><br>
     </div>
-    <div class='username rainbow highlight'>UniSound Error</div>
+    <div class='username rainbow highlightable'>UniSound Error</div>
+    <div class='username-side rainbow fa fa-undo' onclick='zoneTravel(3,3)'></div>
+    <!-- Main Chatting Structure -->
+    <div class='chat-window border'>
+        <!-- Messages Below -->
+    </div>
+    <div class='chat-dashboard border'>
+        <!-- Dashboard Setup -->
+    </div>
 </div>
 
 </body>
