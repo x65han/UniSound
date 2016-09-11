@@ -14,5 +14,5 @@ function sendMessage(){
     console.log('sending message');
 }
 function establishConnection(){
-    var socket = io();
+    // var socket = io();
 }
