@@ -1,7 +1,8 @@
 //configuration varible
 var current_user_state = 0;
-var REST = "http://localhost:5000";
-// var REST = 'http://www.unisoundlive.com/';
+// var REST = "http://localhost:5000";
+var REST = "https://unisoundecho.herokuapp.com";
+// var REST = 'http://www.unisoundlive.com';
 var hard_code_style_length = 0;
 var backgroundImageFlashingOrder = 0;
 var channels_participation = [7,6,7,3,6,3,8,2,1];
