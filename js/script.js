@@ -1,35 +1,45 @@
 //configuration varible
-var username = '';
 var current_user_state = 0;
-var current_user_channel = '';
-var chat_environment_color = '';
+var REST = "http://localhost:5000";
+// var REST = 'http://www.unisoundlive.com/';
+var hard_code_style_length = 0;
 var backgroundImageFlashingOrder = 0;
 var channels_participation = [7,6,7,3,6,3,8,2,1];
-var rainbow = ['#EE6352','#E7386F','orangered','gold','#84DD63','#89FC00','#5ADBFF'];
-var original_rainbow = ['#EE6352','#E7386F','orangered','gold','#84DD63','#89FC00','#5ADBFF'];
-var channels = ['Sports','Movie','Food','Finance','Politics','Travel','Cars','Shopping','Career'];
-var channel  = "<div title = 'error' id = 'error' class='channel col-lg-4 col-md-4 col-sm-4 col-xs-4' onclick='zoneTravel(2,this)'><div class='channel-top'></div><div class='channel-bottom'><div class='channel-avatar'><div class='channel-avatar-top'></div><div class='channel-avatar-bottom'></div></div></div></div>"
+var chat_environment_color,current_user_channel,username,rainbow, channels,channel = '';
 //logic
 window.onload = function(){
-  master_state_change(1);
-  console.log('Ready');
-  colorChange();
-  var backgroundImageFlashing = setInterval(function(){
+  $.get(REST + '/getRainbowColorArray', function(data) {rainbow = data;});
+  $.get(REST + '/getChannelScript', function(data) {channel = data;});
+  $.get(REST + '/getChannelsArray', function(data) {
+      channels = data;
+      master_state_change(1);
+      //Connect to socket io
+      establishConnection();
+      // Local UI setup
       colorChange();
-	}, 5000);
-  complete_canvas();
-  loadChannel(true);
+      var backgroundImageFlashing = setInterval(function(){colorChange();}, 5000);
+      complete_canvas();
+      loadChannels(true);
+  });
+  console.log('Ready');
   //key stroke
   document.body.onkeydown = function(e) {
-      var ev = e || event;
-      var key = ev.keyCode;
+      var ev = e || event;var key = ev.keyCode;
       if(ev.keyCode == 13) {
         console.log('Enter Pressed');
         if(current_user_state == 1){
             zoneTravel(current_user_state,'random');
+        }else if(current_user_state == 3){
+            $('.submit-message').trigger('click');
         }
       }
    }
+   document.getElementById('message').onkeydown = function(e) {
+       var ev = e || event;var key = ev.keyCode;
+       if(ev.keyCode == 13 && current_user_state == 3) {
+            sendMessage();
+       }
+    }
 };
 
 function zoneTravel(current_zone, ele){
@@ -43,6 +53,8 @@ function zoneTravel(current_zone, ele){
         $('.username').html(username);
     }
   }else if(current_zone == 2){
+        console.log('current: ' + chat_environment_color);
+        console.log('target: ' + ele.id);
         current_user_channel = ele.title;
         chat_environment_color = ele.id;
         system(true,current_user_channel);
@@ -87,13 +99,15 @@ function master_state_change(newState){
         var channel_avatar_array = document.getElementsByClassName('channel-avatar');
         setTimeout(function(){
           for(var x = 0;x < channels.length;x++)  channel_avatar_array[x].style.transform = "translateX(40px) translateY(-41px) rotate(0deg)";
-        }, 10);
+        }, 50);
         break;
     case 3:
+        // body background style
+        document.body.style.backgroundColor = chat_environment_color;
+        // style configuration
         $('.background-image').addClass('hidden');
         $('.container-chat').removeClass('hidden');
         $('.bubble-sub').css('color', chat_environment_color);
-        document.body.innerHTML = '<style>.outgoing{border:2px solid '+chat_environment_color+';color:'+chat_environment_color+';}body{background-color:' + chat_environment_color + ' !important;}</style>' + document.body.innerHTML;
         $('.chat-window').css("color", chat_environment_color);
         document.getElementsByClassName('chat-topic-display')[0].innerHTML = current_user_channel;
         $('.chat-dashboard').css("color", chat_environment_color);
@@ -107,15 +121,14 @@ function master_state_change(newState){
             $('.container-chat').css('height','100vh');
         }, 50);
         document.getElementsByClassName('chat-window')[0].innerHTML = '';
-        IncomingBubble('I am Johnson Han', 'Emily Kemps');
-        OutgoingBubble('I am Emily Kemps');
-        IncomingBubble('Where are you?', 'Emily Kemps');
-        OutgoingBubble('I am in British Columbia!');
+        // load message
+        loadMessage();
+        // show latest Message
+        var chat_window = $(".chat-window");
+        $('.chat-window').animate({scrollTop : 9999999999999},900);
         //Reset channel color
         var channel_avatar_array = document.getElementsByClassName('channel-avatar');
-        setTimeout(function(){
-          for(var x = 0;x < channels.length;x++)  channel_avatar_array[x].style.transform = "translateX(40px) translateY(-41px) rotate(180deg)";
-        }, 10);
+        for(var x = 0;x < channels.length;x++)  channel_avatar_array[x].style.transform = "translateX(40px) translateY(-41px) rotate(180deg)";
         break;
     default:
         var message = 'Warning: internal system error';console.log(message);  alert(message);
@@ -181,7 +194,7 @@ function system(decision,message){
   setSystemMessage(message);
   showSystemMessage(decision);
 }
-function loadChannel(decision){
+function loadChannels(decision){
     for(var x = 0; x < channels.length;x++){// Generate Channel Box
         var pre_existing_code = $('.channel-box').html();
         $('.channel-box').html(pre_existing_code + channel);
@@ -203,10 +216,10 @@ function loadChannel(decision){
     }
 }
 function OutgoingBubble(message){
-    var new_outgoing_html_script = "<div class='bubble-container border'><div class='bubble outgoing'>" + message + "</div></div>";
+    var new_outgoing_html_script = "<div class='bubble-container border'><div class='bubble outgoing highlightable'>" + message + "</div></div>";
     document.getElementsByClassName('chat-window')[0].innerHTML += new_outgoing_html_script;
 }
 function IncomingBubble(message,author){
-    var new_incoming_html_script = "<div class='bubble-container border'><div class='bubble incoming'>" + message + "</div><div class='bubble-sub'>- " + author + "</div> </div>";
+    var new_incoming_html_script = "<div class='bubble-container border'><div class='bubble incoming highlightable'>" + message + "</div><div class='bubble-sub'>- " + author + "</div> </div>";
     document.getElementsByClassName('chat-window')[0].innerHTML += new_incoming_html_script;
 }

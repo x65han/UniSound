@@ -1,7 +1,7 @@
 {
-  "name": "node-js-getting-started",
+  "name": "UniSound",
   "version": "0.2.5",
-  "description": "A sample Node.js app using Express 4",
+  "description": "UniSound Live Chatting Terminal",
   "engines": {
     "node": "5.9.1"
   },
@@ -12,7 +12,8 @@
   "dependencies": {
     "ejs": "2.4.1",
     "express": "4.13.3",
-	"socket.io": "*"
+    "firebase": "^3.3.2",
+    "socket.io": "^1.4.8"
   },
   "repository": {
     "type": "git",
