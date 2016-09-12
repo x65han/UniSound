@@ -1,12 +1,13 @@
 //configuration varible
-var current_user_state = 0;
 // var REST = "http://localhost:5000";
-var REST = "https://unisoundecho.herokuapp.com";
-// var REST = 'http://www.unisoundlive.com';
-var hard_code_style_length = 0;
-var backgroundImageFlashingOrder = 0;
-var channels_participation = [7,6,7,3,6,3,8,2,1];
-var chat_environment_color,current_user_channel,username,rainbow, channels,channel = '';
+// var REST = "https://unisoundecho.herokuapp.com";
+var REST = 'http://www.unisoundlive.com';
+var socket,
+    current_user_state = 0,
+    hard_code_style_length = 0,
+    backgroundImageFlashingOrder = 0,
+    channels_participation = [7,6,7,3,6,3,8,2,1],
+    chat_environment_color,current_user_channel,username,rainbow, channels,channel = '';
 //logic
 window.onload = function(){
   $.get(REST + '/getRainbowColorArray', function(data) {rainbow = data;});
