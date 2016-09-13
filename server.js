@@ -85,7 +85,7 @@ function getTimeStamp(){
     if(second.length == 1) second = '0' + second;
     if(mili.length == 1) mili = '00' + mili;
     else if(mili.length == 2) mili = '0' + mili;
-    // console.log(year);console.log(month);console.log(day);console.log(hour);console.log(minute);console.log(second);console.log(mili);
+    console.log(year);console.log(month);console.log(day);console.log(hour);console.log(minute);console.log(second);console.log(mili);
     return year + month + day + hour + minute + second + mili;
 }
 
