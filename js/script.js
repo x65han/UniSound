@@ -1,7 +1,5 @@
 //configuration varible
-// var REST = "http://localhost:5000";
-// var REST = "https://unisoundecho.herokuapp.com";
-var REST = 'http://www.unisoundlive.com';
+var REST = window.location.href.slice(0, window.location.href.length - 1);
 var socket,
     current_user_state = 0,
     hard_code_style_length = 0,

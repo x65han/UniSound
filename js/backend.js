@@ -22,7 +22,7 @@ function sendMessage(){
     socket.emit('chat message', message_wrapper);
 }
 function establishConnection(){
-    socket = io.connect("");
+    socket = io.connect(""); 
 }
 function setSelectionRange(input, selectionStart, selectionEnd) {
     selectionStart  = selectionEnd = 0;
