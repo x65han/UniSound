@@ -41,25 +41,26 @@ io.on('connection', function(socket){
 app.get('/', function(request, response) {response.sendFile(__dirname + '/index.html');});
 app.get('/getChannelScript', function (req, res) {res.status(200).send(channel_script);});
 app.get('/getRainbowColorArray', function (req, res) {res.status(200).send(rainbow_array);});
-app.get('/getIcon', function (req, response) {response.sendFile(__dirname + "/img/favicon.ico");});
-app.get('/getChannelsArray', function (req, res) {
+app.get('/getTime', function (req, res) {res.status(200).send(getTimeStamp())});
+app.get('/getChannelsArray', function (req, respo) {
   ref.on("value", function(snapshot) {
     channels_array = [];
     for(var channel in snapshot.val()) channels_array.push(channel);
-    res.status(200).send(channels_array);
+    respo.status(200).send(channels_array);
   }, function (errorObject) {
-    res.status(400).send("The read failed: " + errorObject.code);
+    respo.status(400).send("The read failed: " + errorObject.code);
     console.log("The read failed: " + errorObject.code);
   });
 });
-app.get('/getMessage/:channel', function (req, res) {
-  //Navigate to according channel
-  // grab specific channel detail
+app.get('/getMessage/:channel', function (req, response) {
+  //Navigate to according channel & grab specific channel detail
   ref.child(req.params.channel).on("value", function(snapshot) {
-	  var channel_response = snapshot.val();
-      res.send(channel_response);
+      response.status(200).json(snapshot.val());
+	  response.flush();
+	  response.end();
   }, function (errorObject) {
-      res.send("The read failed: " + errorObject.code);
+	  response.status(400).send("The read failed: " + errorObject.code);
+	  console.log("The read failed: " + errorObject.code);
   });
 });
 //Local Data
