@@ -40,6 +40,7 @@ io.on('connection', function(socket){
 });
 //REST
 app.get('/forceUpdate', function (req, res) {io.emit('force update',true);res.send(true)});
+app.get('/connections', function (req, res) {res.send("Number of Connection: " + connections.length)});
 app.get('/', function(request, response) {response.sendFile(__dirname + '/index.html');});
 app.get('/getChannelScript', function (req, res) {res.status(200).send(channel_script);});
 app.get('/getRainbowColorArray', function (req, res) {res.status(200).send(rainbow_array);});
