@@ -68,7 +68,7 @@ function userRequestZoneTravel(current_zone, ele){
         chat_environment_color = ele.id;
         system(true,current_user_channel);
         //Clear messages
-        $(".chat-window").html('');
+        clearMessages();
         // load message
         getAndLoadMessageFromChannel();
     }else if(current_zone == 3){
@@ -223,7 +223,6 @@ function loadChannels(decision){
     }
 }
 function OutgoingBubble(message){
-    console.log(message.includes("&#"));
     if(message.includes("&#") == false)
         var outgoingMessage = "<div class='bubble-container border'><div class='bubble outgoing rainbow highlightable'>" + message + "</div></div>";
     else {
@@ -240,4 +239,7 @@ function IncomingBubble(message,author){
 }
 function showLatestMessage(){// show latest Message
     $('.chat-window').animate({scrollTop : document.getElementsByClassName('chat-window')[0].scrollHeight},900);
+}
+function clearMessages(){// clear all messages from channel
+    $('.chat-window').html('');
 }

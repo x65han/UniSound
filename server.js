@@ -27,17 +27,19 @@ io.on('connection', function(socket){
     });
 	//socket.io Functions
 	socket.on('register message', function(msg){
+		msg.message = processEmoticon(msg.message);
 		var internal_message_wrapper = {};
 	    internal_message_wrapper[getTimeStamp()] = {
 	        "detail" : msg.message,
 	        "sender" : msg.signature
 	    };
-		console.log('registering: ' + internal_message_wrapper);
+		console.log('registering: ');console.log(msg);
 		ref.child(msg.channel).update(internal_message_wrapper);
 		io.emit('new message',msg);
 	});
 });
 //REST
+app.get('/forceUpdate', function (req, res) {io.emit('force update',true);res.send(true)});
 app.get('/', function(request, response) {response.sendFile(__dirname + '/index.html');});
 app.get('/getChannelScript', function (req, res) {res.status(200).send(channel_script);});
 app.get('/getRainbowColorArray', function (req, res) {res.status(200).send(rainbow_array);});
@@ -48,6 +50,31 @@ var channels_array = [];
 var rainbow_array = ['#EE6352','#E7386F','orangered','gold','#84DD63','#89FC00','#5ADBFF'];
 var channel_script  = "<div title = 'error' id = 'error' class='channel col-lg-4 col-md-4 col-sm-4 col-xs-4' onclick='userRequestZoneTravel(2,this)'><div class='channel-top'></div><div class='channel-bottom'><div class='channel-avatar'><div class='channel-avatar-top'></div><div class='channel-avatar-bottom'></div></div></div></div>"
 // Ultility Functions
+function processEmoticon(word){
+	while(word.includes("<3") == true)  word = word.replace("<3", "&#x1f60d;");
+    if(word.includes(":") == false && word.includes(";") == false) return word.trim();
+	while(word.includes("3:)") == true)  word = word.replace("3:)", "&#x1f608;");
+	while(word.includes("O:)") == true)  word = word.replace("O:)", "&#128519;");
+    while(word.includes("o:)") == true)  word = word.replace("o:)", "&#128519;");
+    while(word.includes("0:)") == true)  word = word.replace("0:)", "&#128519;");
+	while(word.includes(":)") == true)  word = word.replace(":)", "&#128512;");
+	while(word.includes(":-)") == true)  word = word.replace(":-)", "&#128512;");
+	while(word.includes(":x") == true)  word = word.replace(":x", "&#128566;");
+	while(word.includes(":X") == true)  word = word.replace(":X", "&#128566;");
+	while(word.includes(":-X") == true)  word = word.replace(":-X", "&#128566;");
+    while(word.includes(":-x") == true)  word = word.replace(":-x", "&#128566;");
+    while(word.includes(":(") == true)  word = word.replace(":(", "&#128546;");
+    while(word.includes(";)") == true)  word = word.replace(";)", "&#128521;");
+    while(word.includes(":|") == true)  word = word.replace(":|", "&#128529;");
+    while(word.includes(";0") == true)  word = word.replace(";0", "&#128562;");
+	while(word.includes(";o") == true)  word = word.replace(";o", "&#128562;");
+    while(word.includes(";O") == true)  word = word.replace(";O", "&#128562;");
+    while(word.includes(":0") == true)  word = word.replace(":0", "&#128562;");
+	while(word.includes(":o") == true)  word = word.replace(":o", "&#128562;");
+	while(word.includes(":O") == true)  word = word.replace(":O", "&#128562;");
+    while(word.includes(":3") == true)  word = word.replace(":3", "&#x1f63a;");
+    return word.trim();
+}
 function getTimeStamp(){
     var d = new Date();
     var year  = d.getFullYear().toString();
