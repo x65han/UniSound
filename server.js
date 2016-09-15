@@ -33,7 +33,7 @@ io.on('connection', function(socket){
 	        "sender" : msg.signature
 	    };
 		console.log(internal_message_wrapper);
-		// ref.child(msg.channel).update(internal_message_wrapper);
+		ref.child(msg.channel).update(internal_message_wrapper);
 	});
 });
 //REST
