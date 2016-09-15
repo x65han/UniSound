@@ -72,7 +72,8 @@ function processEmoticon(word){
     while(word.includes(":0") == true)  word = word.replace(":0", "&#128562;");
 	while(word.includes(":o") == true)  word = word.replace(":o", "&#128562;");
 	while(word.includes(":O") == true)  word = word.replace(":O", "&#128562;");
-    while(word.includes(":3") == true)  word = word.replace(":3", "&#x1f63a;");
+	while(word.includes(":3") == true)  word = word.replace(":3", "&#x1f63a;");
+    while(word.includes(";3") == true)  word = word.replace(";3", "&#x1f63a;");
     return word.trim();
 }
 function getTimeStamp(){
