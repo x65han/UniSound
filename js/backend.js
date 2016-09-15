@@ -1,16 +1,16 @@
-function loadMessage(){
-  console.log('UI request message from channel: ' + current_user_channel);
-  $.get(REST + '/getMessage/' + current_user_channel, function(data) {
-      for(var message in data){
-          console.log(data[message].detail + '  from: ' + data[message].sender);
-          if(data[message].sender == username)
-              OutgoingBubble(data[message].detail);
-          else
-              IncomingBubble(data[message].detail, data[message].sender);
-      }
-  });
+function applyMessageOnUI(messageData){
+    $('.chat-window').html('');
+    console.log('Apply Messages on UI: ' + current_user_channel);
+    for(var message in messageData){
+        if(messageData[message].sender == username)
+            OutgoingBubble(messageData[message].detail);
+        else
+            IncomingBubble(messageData[message].detail, messageData[message].sender);
+    }
+    showLatestMessage();
 }
 function sendMessage(){
+    if($('#message').val().trim() == '') return;
     console.log('sending message');
     var message_wrapper = {
         'channel': current_user_channel,
@@ -18,22 +18,31 @@ function sendMessage(){
         'signature': username
     };
     $('#message').val('');
-    setSelectionRange(document.getElementById('message'),0,0);
-    socket.emit('chat message', message_wrapper);
+    socket.emit('register message', message_wrapper);
 }
 function establishConnection(){
-    socket = io.connect(""); 
+    socket = io.connect("");
 }
-function setSelectionRange(input, selectionStart, selectionEnd) {
-    selectionStart  = selectionEnd = 0;
-    if (input.setSelectionRange){
-        input.focus();
-        input.setSelectionRange(selectionStart, selectionEnd);
-    }else if (input.createTextRange){
-        var range = input.createTextRange();
-        range.collapse(true);
-        range.moveEnd('character', selectionEnd);
-        range.moveStart('character', selectionStart);
-        range.select();
-    }
+function getAndLoadMessageFromChannel(){
+    //Navigate to according channel & grab specific channel detail
+    alert("getAndLoadMessageFromChannel");
+    ref.child(current_user_channel).on("value", function(snapshot) {
+        // console.log(snapshot.val());
+        applyMessageOnUI(snapshot.val());
+    }, function (errorObject) {
+        console.log('cannot get messages from: ' + channelRequest);
+    });
+}
+
+function getAndLoadChannels(){
+    if(environmentSetup >= 3) return;
+    ref.on("value", function(snapshot) {
+        channels_array = [];
+        for(var one in snapshot.val()) channels_array.push(one);
+        channels = channels_array;
+        environmentSetup++;
+        console.log('channels below: ' + channels);
+    }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+    });
 }

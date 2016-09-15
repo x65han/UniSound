@@ -1,5 +1,7 @@
 //configuration varible
 var REST = window.location.href.slice(0, window.location.href.length - 1);
+var ref = new Firebase("https://unisoundpower.firebaseio.com/channels");
+var environmentSetup = 0;
 var socket,
     current_user_state = 0,
     hard_code_style_length = 0,
@@ -7,72 +9,78 @@ var socket,
     channels_participation = [7,6,7,3,6,3,8,2,1],
     chat_environment_color,current_user_channel,username,rainbow, channels,channel = '';
 //logic
+function completeSetup(){
+    applyZoneTravel(1);
+    //Connect to socket io
+    establishConnection();
+    // Local UI setup
+    colorChange();
+    var backgroundImageFlashing = setInterval(function(){colorChange();}, 5000);
+    applyCanvas();
+    loadChannels(true);
+}
 window.onload = function(){
-  $.get(REST + '/getRainbowColorArray', function(data) {rainbow = data;});
-  $.get(REST + '/getChannelScript', function(data) {channel = data;});
-  $.get(REST + '/getChannelsArray', function(data) {
-      channels = data;
-      master_state_change(1);
-      //Connect to socket io
-      establishConnection();
-      // Local UI setup
-      colorChange();
-      var backgroundImageFlashing = setInterval(function(){colorChange();}, 5000);
-      complete_canvas();
-      loadChannels(true);
-  });
-  console.log('Ready');
-  //key stroke
-  document.body.onkeydown = function(e) {
-      var ev = e || event;var key = ev.keyCode;
-      if(ev.keyCode == 13) {
-        console.log('Enter Pressed');
-        if(current_user_state == 1){
-            zoneTravel(current_user_state,'random');
-        }else if(current_user_state == 3){
-            $('.submit-message').trigger('click');
+    getAndLoadChannels();
+    $.get(REST + '/getRainbowColorArray', function(data) {rainbow = data;environmentSetup++;});
+    $.get(REST + '/getChannelScript', function(data) {channel = data;environmentSetup++;});
+    var checkingEnvironmentTimer = setInterval(function(){
+        console.log('checking environment');
+        if(environmentSetup >= 3){
+            completeSetup();
+            clearInterval(checkingEnvironmentTimer);
+            console.log('Environment Setup Complete');
+            console.log('==========================');
         }
-      }
+    }, 10);
+    //key stroke
+    document.body.onkeydown = function(e) {
+        var ev = e || event;var key = ev.keyCode;
+        if(ev.keyCode == 13) {
+            console.log('Enter Pressed');
+            if(current_user_state == 1){
+                userRequestZoneTravel(current_user_state,'random');
+            }else if(current_user_state == 3){
+                sendMessage();
+            }
+        }
    }
    document.getElementById('message').onkeydown = function(e) {
        var ev = e || event;var key = ev.keyCode;
        if(ev.keyCode == 13 && current_user_state == 3) {
             sendMessage();
-       }
+        }
     }
 };
 
-function zoneTravel(current_zone, ele){
-  //validation
-  if(current_zone == 1){
-    if($('.username-input').val() == ''){
-        system(true,'Name cannot be empty!');
-        return;
-    }else{
-        username = $('.username-input').val();
-        $('.username').html(username);
-    }
-  }else if(current_zone == 2){
-        console.log('current: ' + chat_environment_color);
-        console.log('target: ' + ele.id);
+function userRequestZoneTravel(current_zone, ele){
+    //validation of travelling from
+    if(current_zone == 1){
+        if($('.username-input').val() == ''){
+            system(true,'Name cannot be empty!');
+            return;
+        }else{
+            username = $('.username-input').val();
+            console.log('Username: ' + username);
+            $('.username').html(username);
+        }
+    }else if(current_zone == 2){
         current_user_channel = ele.title;
         chat_environment_color = ele.id;
         system(true,current_user_channel);
-  }else if(current_zone == 3){
+    }else if(current_zone == 3){
         current_user_channel = '';
-  }
-  else{
-    system(true,'Invalid Zone Travel');
-    return;
-  }
-  //actions
-  current_zone++;
-  if(current_zone > 3) current_zone -= 2;
-  master_state_change(current_zone);
+    }else{
+        system(true,'Invalid Zone Travel');
+        return;
+    }
+    //actions
+    if(current_zone == 3) current_zone = 2;
+    else                  current_zone++;
+    applyZoneTravel(current_zone);
 }
+
 //Ultility Functions
-function master_state_change(newState){
-  if(current_user_state == newState) return;
+function applyZoneTravel(newState){
   $('.container-chat').addClass('hidden');
   $('.container-register').addClass('hidden');
   $('.container-channel').addClass('hidden');
@@ -120,12 +128,10 @@ function master_state_change(newState){
             $('.container-chat').css('width','80vw');
             $('.container-chat').css('height','100vh');
         }, 50);
-        document.getElementsByClassName('chat-window')[0].innerHTML = '';
+        //Clear messages
+        $(".chat-window").html('');
         // load message
-        loadMessage();
-        // show latest Message
-        var chat_window = $(".chat-window");
-        $('.chat-window').animate({scrollTop : 9999999999999},900);
+        getAndLoadMessageFromChannel();
         //Reset channel color
         var channel_avatar_array = document.getElementsByClassName('channel-avatar');
         for(var x = 0;x < channels.length;x++)  channel_avatar_array[x].style.transform = "translateX(40px) translateY(-41px) rotate(180deg)";
@@ -150,28 +156,28 @@ function colorChange(){
   if(backgroundImageFlashingOrder == rainbow.length) backgroundImageFlashingOrder=0;
 }
 function arrayIncrease(increase){
-  var temp = backgroundImageFlashingOrder + increase;
-  if(temp > (rainbow.length-1)) return (temp - rainbow.length);
-  else return temp
+    var temp = backgroundImageFlashingOrder + increase;
+    if(temp > (rainbow.length-1)) return (temp - rainbow.length);
+    else return temp
 }
 
-function complete_canvas(){
-  var c = document.getElementById('next-button');
-  var ctx = c.getContext("2d");
-  //gradient color
-  var r = c.width / 2;
-  var grd = ctx.createLinearGradient(c.width/2,c.height/2,0,0,c.width/2);
-  grd.addColorStop(0, "#2e3238");
-  grd.addColorStop(1, "#181818");
+function applyCanvas(){
+    var c = document.getElementById('next-button');
+    var ctx = c.getContext("2d");
+    //gradient color
+    var r = c.width / 2;
+    var grd = ctx.createLinearGradient(c.width/2,c.height/2,0,0,c.width/2);
+    grd.addColorStop(0, "#2e3238");
+    grd.addColorStop(1, "#181818");
 
-  ctx.fillStyle = grd;
-  //Initialize Triangle
-  ctx.beginPath();
-  ctx.moveTo(0,0);
-  ctx.lineTo(c.width,0);
-  ctx.lineTo(c.width / 2, c.height);
-  ctx.fillstyle = arrayIncrease(3);
-  ctx.fill();
+    ctx.fillStyle = grd;
+    //Initialize Triangle
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.lineTo(c.width,0);
+    ctx.lineTo(c.width / 2, c.height);
+    ctx.fillstyle = arrayIncrease(3);
+    ctx.fill();
 }
 function showSystemMessage(decision){
   if($('.system').width() > 0 && decision == true )return;
@@ -222,4 +228,8 @@ function OutgoingBubble(message){
 function IncomingBubble(message,author){
     var new_incoming_html_script = "<div class='bubble-container border'><div class='bubble incoming highlightable'>" + message + "</div><div class='bubble-sub'>- " + author + "</div> </div>";
     document.getElementsByClassName('chat-window')[0].innerHTML += new_incoming_html_script;
+}
+function showLatestMessage(){
+    // show latest Message
+    $('.chat-window').animate({scrollTop : document.getElementsByClassName('chat-window')[0].scrollHeight},900);
 }

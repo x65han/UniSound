@@ -26,15 +26,14 @@ io.on('connection', function(socket){
 		console.log('Disconnected: %s sockets connected', connections.length);
     });
 	//socket.io Functions
-	socket.on('chat message', function(msg){
+	socket.on('register message', function(msg){
 		var internal_message_wrapper = {};
 	    internal_message_wrapper[getTimeStamp()] = {
-	            "detail" : msg.message,
-	            "sender" : msg.signature
+	        "detail" : msg.message,
+	        "sender" : msg.signature
 	    };
 		console.log(internal_message_wrapper);
-		ref.child(msg.channel).update(internal_message_wrapper);
-		// io.emit('chat message', msg);
+		// ref.child(msg.channel).update(internal_message_wrapper);
 	});
 });
 //REST
@@ -42,32 +41,11 @@ app.get('/', function(request, response) {response.sendFile(__dirname + '/index.
 app.get('/getChannelScript', function (req, res) {res.status(200).send(channel_script);});
 app.get('/getRainbowColorArray', function (req, res) {res.status(200).send(rainbow_array);});
 app.get('/getTime', function (req, res) {res.status(200).send(getTimeStamp())});
-app.get('/getChannelsArray', function (req, respo) {
-  ref.on("value", function(snapshot) {
-    channels_array = [];
-    for(var channel in snapshot.val()) channels_array.push(channel);
-    respo.status(200).send(channels_array);
-  }, function (errorObject) {
-    respo.status(400).send("The read failed: " + errorObject.code);
-    console.log("The read failed: " + errorObject.code);
-  });
-});
-app.get('/getMessage/:channel', function (req, response) {
-  //Navigate to according channel & grab specific channel detail
-  ref.child(req.params.channel).on("value", function(snapshot) {
-      response.status(200).json(snapshot.val());
-	  response.flush();
-	  response.end();
-  }, function (errorObject) {
-	  response.status(400).send("The read failed: " + errorObject.code);
-	  console.log("The read failed: " + errorObject.code);
-  });
-});
 //Local Data
 // var channels_array = ['Sports','Movie','Food','Finance','Politics','Travel','Cars','Shopping','Career'];
 var channels_array = [];
 var rainbow_array = ['#EE6352','#E7386F','orangered','gold','#84DD63','#89FC00','#5ADBFF'];
-var channel_script  = "<div title = 'error' id = 'error' class='channel col-lg-4 col-md-4 col-sm-4 col-xs-4' onclick='zoneTravel(2,this)'><div class='channel-top'></div><div class='channel-bottom'><div class='channel-avatar'><div class='channel-avatar-top'></div><div class='channel-avatar-bottom'></div></div></div></div>"
+var channel_script  = "<div title = 'error' id = 'error' class='channel col-lg-4 col-md-4 col-sm-4 col-xs-4' onclick='userRequestZoneTravel(2,this)'><div class='channel-top'></div><div class='channel-bottom'><div class='channel-avatar'><div class='channel-avatar-top'></div><div class='channel-avatar-bottom'></div></div></div></div>"
 // Ultility Functions
 function getTimeStamp(){
     var d = new Date();
