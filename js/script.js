@@ -78,9 +78,8 @@ function userRequestZoneTravel(current_zone, ele){
         return;
     }
     //actions
-    if(current_zone == 3) current_zone = 2;
-    else                  current_zone++;
-    applyZoneTravel(current_zone);
+    if(current_zone == 3) applyZoneTravel(2);
+    else    applyZoneTravel(current_zone + 1);
 }
 
 //Ultility Functions
@@ -224,14 +223,21 @@ function loadChannels(decision){
     }
 }
 function OutgoingBubble(message){
-    var new_outgoing_html_script = "<div class='bubble-container border'><div class='bubble outgoing highlightable'>" + message + "</div></div>";
-    document.getElementsByClassName('chat-window')[0].innerHTML += new_outgoing_html_script;
+    console.log(message.includes("&#"));
+    if(message.includes("&#") == false)
+        var outgoingMessage = "<div class='bubble-container border'><div class='bubble outgoing rainbow highlightable'>" + message + "</div></div>";
+    else {
+        var outgoingMessage = "<div class='bubble-container border'><div class='bubble outgoing highlightable' style='font-size:50px;border:none;'>" + message + "</div></div>";
+    }
+    document.getElementsByClassName('chat-window')[0].innerHTML += outgoingMessage;
 }
 function IncomingBubble(message,author){
-    var new_incoming_html_script = "<div class='bubble-container border'><div class='bubble incoming highlightable'>" + message + "</div><div class='bubble-sub'>- " + author + "</div> </div>";
-    document.getElementsByClassName('chat-window')[0].innerHTML += new_incoming_html_script;
+    if(message.includes("&#") == false)
+        var incomingMessage = "<div class='bubble-container border'><div class='bubble incoming highlightable'>" + message + "</div><div class='bubble-sub'>- " + author + "</div> </div>";
+    else
+        var incomingMessage = "<div class='bubble-container border'><div class='bubble incoming highlightable' style='font-size:50px;'>" + message + "</div><div class='bubble-sub'>- " + author + "</div> </div>";
+    document.getElementsByClassName('chat-window')[0].innerHTML += incomingMessage;
 }
-function showLatestMessage(){
-    // show latest Message
+function showLatestMessage(){// show latest Message
     $('.chat-window').animate({scrollTop : document.getElementsByClassName('chat-window')[0].scrollHeight},900);
 }

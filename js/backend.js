@@ -9,13 +9,21 @@ function applyMessageOnUI(messageData){
 function sendMessage(){
     if($('#message').val().trim() == '') return;
     console.log('sending message');
+    var processedMessage = processEmoticon();
     var message_wrapper = {
         'channel': current_user_channel,
-        'message': $('#message').val().trim(),
+        'message': processedMessage.trim(),
         'signature': username
     };
     $('#message').val('');
     socket.emit('register message', message_wrapper);
+}
+function processEmoticon(){
+    var trimmed = $('#message').val().trim();
+    var happyFace = trimmed.replace(":)", "&#128512;   ");
+    var sadFace = happyFace.replace(":(","&#128546;   ");
+    var winkler = sadFace.replace(";)","&#128521;   ");
+    return winkler;
 }
 function establishConnection(){
     socket = io.connect("");
