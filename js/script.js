@@ -67,6 +67,10 @@ function userRequestZoneTravel(current_zone, ele){
         current_user_channel = ele.title;
         chat_environment_color = ele.id;
         system(true,current_user_channel);
+        //Clear messages
+        $(".chat-window").html('');
+        // load message
+        getAndLoadMessageFromChannel();
     }else if(current_zone == 3){
         current_user_channel = '';
     }else{
@@ -127,11 +131,9 @@ function applyZoneTravel(newState){
             $('.container-chat').css('transform','rotateY(0deg) rotateX(0deg)');
             $('.container-chat').css('width','80vw');
             $('.container-chat').css('height','100vh');
+            showLatestMessage();
         }, 50);
-        //Clear messages
-        $(".chat-window").html('');
-        // load message
-        getAndLoadMessageFromChannel();
+
         //Reset channel color
         var channel_avatar_array = document.getElementsByClassName('channel-avatar');
         for(var x = 0;x < channels.length;x++)  channel_avatar_array[x].style.transform = "translateX(40px) translateY(-41px) rotate(180deg)";

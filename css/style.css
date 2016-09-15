@@ -4,10 +4,15 @@
 	transition:all 0.4s ease-out;
 	font-weight: bold;
 	-webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
 }
 /*.border{border:2px solid red;}*/
+.interactive{
+	-webkit-user-select: auto;
+	-moz-user-select: auto;
+	-ms-user-select: auto;
+}
 .highlightable{
 	-webkit-user-select: text;  /* Chrome all / Safari all */
 	-moz-user-select: text;     /* Firefox all */
