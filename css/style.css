@@ -78,7 +78,7 @@ body{
 }
 .container-register{
 	position: absolute;
-  top: 50%;
+	top: 50%;
  	margin-top: -200px;/* half of #content height*/
  	left: 0;
  	width: 100%;
@@ -91,9 +91,9 @@ body{
 }
 .username-input{
 	border-radius:16px;
-	-webkit-user-select: auto;
-	-moz-user-select: auto;
-	-ms-user-select: auto;
+	-webkit-user-select: auto;-moz-user-select: auto;-ms-user-select: auto;
+	width:400px;
+	max-width: 80%;
 	margin-bottom:48px;
 	font-size:36px;
 	background-color:transparent;

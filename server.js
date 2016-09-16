@@ -49,7 +49,7 @@ app.get('/getTime', function (req, res) {res.status(200).send(getTimeStamp())});
 // var channels_array = ['Sports','Movie','Food','Finance','Politics','Travel','Cars','Shopping','Career'];
 var channels_array = [];
 var rainbow_array = ['#EE6352','#E7386F','orangered','gold','#84DD63','#89FC00','#5ADBFF'];
-var channel_script  = "<div title = 'error' id = 'error' class='channel col-lg-4 col-md-4 col-sm-4 col-xs-4' onclick='userRequestZoneTravel(2,this)'><div class='channel-top'></div><div class='channel-bottom'><div class='channel-avatar'><div class='channel-avatar-top'></div><div class='channel-avatar-bottom'></div></div></div></div>"
+var channel_script  = "<div title = 'error' id = 'error' class='channel col-lg-4 col-md-4 col-sm-4 col-xs-12' onclick='userRequestZoneTravel(2,this)'><div class='channel-top'></div><div class='channel-bottom'><div class='channel-avatar'><div class='channel-avatar-top'></div><div class='channel-avatar-bottom'></div></div></div></div>"
 // Ultility Functions
 function processEmoticon(word){
 	while(word.includes("<3") == true)  word = word.replace("<3", "&#x1f60d;");
