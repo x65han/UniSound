@@ -23,6 +23,15 @@ window.onload = function(){
     getAndLoadChannels();
     $.get(REST + '/getRainbowColorArray', function(data) {rainbow = data;environmentSetup++;});
     $.get(REST + '/getChannelScript', function(data) {channel = data;environmentSetup++;});
+    //bubbleCanvas animation
+    if(isCanvasSupported() == false){
+        $('.register-instruction').html('What is your name:');
+        $('.register-instruction').css('margin-bottom','48px');
+    }else{
+        var bubble = new bubbleAnimation();
+        bubble.start();
+    }
+    // checking if environmentSetup is done
     var checkingEnvironmentTimer = setInterval(function(){
         console.log('checking environment');
         if(environmentSetup >= 3){
@@ -31,7 +40,7 @@ window.onload = function(){
             console.log('Environment Setup Complete');
             console.log('==========================');
         }
-    }, 10);
+    }, 100);
     //key stroke
     document.body.onkeydown = function(e) {
         var ev = e || event;var key = ev.keyCode;
@@ -62,6 +71,7 @@ function userRequestZoneTravel(current_zone, ele){
             username = $('.username-input').val();
             console.log('Username: ' + username);
             $('.username').html(username);
+            clearInterval(bubbleTimer);
         }
     }else if(current_zone == 2){
         current_user_channel = ele.title;
@@ -163,22 +173,22 @@ function arrayIncrease(increase){
 }
 
 function applyCanvas(){
-    var c = document.getElementById('next-button');
-    var ctx = c.getContext("2d");
+    var c_button = document.getElementById('next-button');
+    var ctx_button = c_button.getContext("2d");
     //gradient color
-    var r = c.width / 2;
-    var grd = ctx.createLinearGradient(c.width/2,c.height/2,0,0,c.width/2);
+    var r = c_button.width / 2;
+    var grd = ctx_button.createLinearGradient(c_button.width/2,c_button.height/2,0,0,c_button.width/2);
     grd.addColorStop(0, "#2e3238");
     grd.addColorStop(1, "#181818");
 
-    ctx.fillStyle = grd;
+    ctx_button.fillStyle = grd;
     //Initialize Triangle
-    ctx.beginPath();
-    ctx.moveTo(0,0);
-    ctx.lineTo(c.width,0);
-    ctx.lineTo(c.width / 2, c.height);
-    ctx.fillstyle = arrayIncrease(3);
-    ctx.fill();
+    ctx_button.beginPath();
+    ctx_button.moveTo(0,0);
+    ctx_button.lineTo(c_button.width,0);
+    ctx_button.lineTo(c_button.width / 2, c_button.height);
+    ctx_button.fillstyle = arrayIncrease(3);
+    ctx_button.fill();
 }
 function showSystemMessage(decision){
   if($('.system').width() > 0 && decision == true )return;

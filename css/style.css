@@ -87,7 +87,12 @@ body{
 .register-instruction{
 	font-size:48px;
 	color:black;
-	margin-bottom:48px;
+	margin-bottom:20px;
+}
+#bubbleCanvas{
+	max-width:100%;
+	min-width:600px;
+	height:100px;
 }
 .username-input{
 	border-radius:16px;
