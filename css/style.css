@@ -85,13 +85,16 @@ body{
 	text-align:center;
 }
 .register-instruction{
+	transition:all 1s ease-out;
 	font-size:48px;
 	color:black;
-	margin-bottom:20px;
+	margin-bottom:30px;
 }
 #bubbleCanvas{
 	max-width:100%;
-	min-width:600px;
+	/*min-width:600px;*/
+	transition:all 1s ease-out;
+	min-width:100vw;
 	height:100px;
 }
 .username-input{

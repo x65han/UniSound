@@ -3,7 +3,7 @@ function isCanvasSupported(){
     return !!(elem.getContext && elem.getContext('2d'));
 }
 var bubble = [];
-var bubbleTimer,c,ctx,radius = 3;
+var bubbleTimer,c,ctx,radius = 2.5,secondary = false;
 function bubbleAnimation(){
     console.log('BUBBLE: =-=-=-=-=-=-=-=');
     //Setting up canvas
@@ -13,7 +13,7 @@ function bubbleAnimation(){
     ctx = c.getContext("2d");
     // Graphic constants
     this.fontSize = 70;
-    this.density = 2;
+    this.density = 3;
     this.keyword = "What is your name :";
     //Triggering Main features
     this.start = function(){
@@ -21,7 +21,7 @@ function bubbleAnimation(){
         ctx.fillStyle = "red";
         ctx.font = this.fontSize + 'px Arial';
         ctx.textAlign="center";
-        ctx.fillText(this.keyword, 320, this.fontSize);
+        ctx.fillText(this.keyword, c.width/2, this.fontSize);
         this.processImage();
     }
     // Utility Functions
@@ -42,6 +42,7 @@ function bubbleAnimation(){
                           currentY: this.getRandomNumber(c.height),
                           targetX: width,
                           targetY: height,
+                          velocity: this.getRandomNumber(20),
                           color: this.getRandomColor()
                       }
                       bubble.push(temp);
@@ -73,36 +74,49 @@ function draw(){
     ctx.clearRect(0, 0, c.width, c.height);
     //update position
     for(var i = 0;i < bubble.length; i++){
-        if(Math.abs(bubble[i].targetX - bubble[i].currentX) < (10 + 1)){
+        if(Math.abs(bubble[i].targetX - bubble[i].currentX) < (bubble[i].velocity + 1)){
             bubble[i].currentX = bubble[i].targetX;
             lap++;
         }
-        else if(bubble[i].targetX > bubble[i].currentX) bubble[i].currentX += 10;
-        else if(bubble[i].targetX < bubble[i].currentX) bubble[i].currentX -= 10;
+        else if(bubble[i].targetX > bubble[i].currentX) bubble[i].currentX += bubble[i].velocity;
+        else if(bubble[i].targetX < bubble[i].currentX) bubble[i].currentX -= bubble[i].velocity;
 
-        if(Math.abs(bubble[i].targetY - bubble[i].currentY) < (10 + 1)){
+        if(Math.abs(bubble[i].targetY - bubble[i].currentY) < (bubble[i].velocity + 1)){
              bubble[i].currentY = bubble[i].targetY;
              lap++;
         }
-        else if(bubble[i].targetY > bubble[i].currentY) bubble[i].currentY += 10;
-        else if(bubble[i].targetY < bubble[i].currentY) bubble[i].currentY -= 10;
+        else if(bubble[i].targetY > bubble[i].currentY) bubble[i].currentY += bubble[i].velocity;
+        else if(bubble[i].targetY < bubble[i].currentY) bubble[i].currentY -= bubble[i].velocity;
         else if(bubble[i].currentY == bubble[i].targetY) lap++;
     }
+    // check if done
     if(lap == bubble.length *2){
-        clearInterval(bubbleTimer);
-        setTimeout(function(){
-            $('.register-instruction').html('What is your name:');
-            $('.register-instruction').css('margin-bottom','48px');
-        }, 3000);
+        if(secondary == false){
+            setTimeout(function(){
+                for(var z = 0;z < bubble.length; z++){
+                    bubble[z].targetY = 0;
+                    bubble[z].targetX = 0;
+                }
+                secondary = true;
+                setTimeout(function(){
+                    clearInterval(bubbleTimer);
+                    $('.register-instruction').html('What is your name:');
+                    $('#bubbleCanvas').addClass('hidden');
+                }, 1000);
+            }, 2000);
+        }
     }
     // Draw the circle
     for(var x = 0;x < bubble.length; x++){
         ctx.fillStyle = bubble[x].color;
         ctx.beginPath();
-        // if(lap == 1)console.log(bubble[x].targetX,bubble[x].targetY);
-        // ctx.arc(bubble[x].targetX, bubble[x].targetY, radius ,0 , Math.PI*2, true);
         ctx.arc(bubble[x].currentX, bubble[x].currentY, radius ,0 , Math.PI*2, true);
         ctx.closePath();
         ctx.fill();
     }
 }
+window.onresize = function(event) {
+    clearInterval(bubbleTimer);
+    $('.register-instruction').html('What is your name:');
+    $('#bubbleCanvas').addClass('hidden');
+};
