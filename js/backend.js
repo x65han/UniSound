@@ -14,6 +14,8 @@ function sendMessage(){
         'message': $('#message').val().trim(),
         'signature': username
     };
+    $('.chat-dashboard').css('border-bottom-width','150px');
+    setTimeout(function(){ $('.chat-dashboard').css('border-bottom-width','2px'); }, 120);
     $('#message').val('');
     socket.emit('register message', message_wrapper);
 }

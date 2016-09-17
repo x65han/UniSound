@@ -24,7 +24,7 @@
 
 <div class='container-register'>
     <div class='register-instruction'>What is your name:</div>
-    <input class='username-input'></input><br>
+    <input class='username-input interactive'></input><br>
     <canvas class='container-register-connection' id='next-button' onclick='userRequestZoneTravel(1,null)'></canvas>
 </div>
 
@@ -46,9 +46,10 @@
     </div>
     <div class='chat-dashboard border'>
         <!-- Dashboard Setup -->
-        <label> Enter Message</label>
-        <textarea class='form-control interactive' id='message' style='width:80%;'></textarea>
-        <input onclick='sendMessage()' type='submit' id='submit-message' class='btn btn-primary' value="Send Message"></input>
+        <!-- <label> Enter Message</label><br> -->
+        <textarea class='interactive' id='message'></textarea><button onclick='sendMessage()' id='submit-message'>Send Message</button>
+        <!-- <textarea class='interactive' id='message'></textarea> -->
+        <!-- <input onclick='sendMessage()' type='submit' id='submit-message' value="Send Message"></input> -->
     </div>
 </div>
 
