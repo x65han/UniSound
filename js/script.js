@@ -24,7 +24,7 @@ window.onload = function(){
     $.get(REST + '/getRainbowColorArray', function(data) {rainbow = data;environmentSetup++;});
     $.get(REST + '/getChannelScript', function(data) {channel = data;environmentSetup++;});
     //bubbleCanvas animation
-    if(isCanvasSupported() == false){
+    if(isCanvasSupported() == false || window.innerWidth <= 700){
         $('.register-instruction').html('What is your name:');
         $('.register-instruction').css('margin-bottom','48px');
     }else{
