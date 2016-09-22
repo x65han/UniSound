@@ -44,11 +44,11 @@ body{
 	height:100vh;width:80vw;top:0px;margin-left:auto;margin-right:auto;
 }
 .profile-image-container{
-	width:80px;text-align:center;display:block;height:80px;position:relative;
+	width:80px;text-align:center;display:block;height:80px;position:relative;float:right;
 }
 .profile-image{
 	margin:auto;border: 5px solid #181818;width:100%;
-	border-bottom-right-radius: 50%;box-shadow: #00F0B5 1px 1px 0px 1px;
+	border-bottom-left-radius: 50%;box-shadow: #00F0B5 -1px 1px 0px 1px;
 }
 .rainbow{
 	background: -webkit-linear-gradient(180deg,#EE6352,#E7386F,orangered,gold,#59CD90,#5ADBFF);
@@ -57,12 +57,12 @@ body{
 }
 .username{
 	position:absolute;
-	border-radius:24px;float:right;top:0;
-	margin:10px;padding:5px;right:0;border:2px solid #00F0B5;
+	border-radius:24px;top:0;
+	margin:10px;padding:5px;left:0;border:2px solid #00F0B5;
 }
 .username-side{
 	z-index:999;
-	right:0;
+	left:0;
 	border-radius:24px;
 	cursor:pointer;
 	margin:10px;
@@ -72,9 +72,9 @@ body{
 	border:2px solid #00F0B5;
 }
 .chat-topic-display{
-	position:absolute;top:80px;
-	display:table;float:left;
-	margin:10px;padding:5px;
+	position:absolute;top:80px; width:80px;max-width: 9vw;
+	display:table;margin-top:10px;
+	margin-right:-10px;padding:5px;
 }
 .container-register{
 	position: absolute;
@@ -145,14 +145,15 @@ body{
 	border-bottom-right-radius:100px;font-size:24px;width:80px;height:40px;
 }
 .chat-window{
-	top:0;height:80vh;z-index:500;overflow-x: hidden;overflow-y: scroll;
-	position:absolute;width:80%;border:2px solid red;
-	-webkit-overflow-scrolling: touch;
+	top:40px;height:80vh;z-index:500;overflow-x: hidden;overflow-y: scroll;
+	position:absolute;width:80%; 
+	-webkit-overflow-scrolling: touch;max-height:calc(100vh - 40px - 82px - 20px);
 	margin-right:auto;margin-left:auto;left:0;right:0;
 }
 .chat-dashboard{
-	border-style:solid;width:80%;z-index:999;border-top-left-radius: 50%;
-	border-top-right-radius: 50%;transition: all 0.2s ease-out;height:20vh;padding-top:5vh;
+	border-style:solid;width:80%;z-index:999;border-top-left-radius:50%;
+	margin-bottom:20px;max-height:82px;height:82px;padding-left:10px;padding-right:10px;
+	border-top-right-radius: 50%;transition: all 0.2s ease-out;padding-top: 27px;
 	position:absolute;bottom:0;left:0;right:0;margin-right:auto;margin-left:auto;
 }
 .bubble-container{
@@ -174,26 +175,27 @@ body{
 .outgoing{
 	float:right;right:20%;color:#00F0B5;border-radius:24px;border:2px solid #00F0B5;
 }
-#message{//textarea
+#message{/*textarea*/
 	display:inline-block;
-	width: 70%;
 	padding: 6px 12px 6px 12px;
-	font-size:14px;
-	line-height:1.5;
-	height:10vh;
-	border-radius:25%;
-	border:2px solid red;;
 	color: #00F0B5;
+	font-size:14px;
+	line-height:2;
+	outline:none;
+	height:8vh;
+	width: 70%;
+	border-top-right-radius: 20%;
+	border-top-left-radius:  20%;
 	background-color:transparent;
-	vertical-align: middle;
 }
-#submit-message{//submit button
+#submit-message{/*submit button*/
 	display:inline-block;
 	-webkit-appearance: button;
-	cursor: pointer;
-	color:#fff;
-	height:10vh;
-	width:30%;
+	cursor: pointer;font-weight: bold;
+	color:#fff; float:right; margin-top:10px;
+	margin-bottom:20px;
+	height:8vh;	max-height: 30px;
+	width:30%; max-width:130px;
 	background-color: #337ab7;
 	border: 1px solid #337ab7;
 	padding:6px 12px 6px 12px;
@@ -212,4 +214,6 @@ body{
 	.container-chat{width:100vw !important;}
 	body{padding:0;}
 	.outgoing{right:0px;}
+	.profile-image-container{max-width:9vw;}
+	.chat-topic-display{visibility:hidden;}
 }
