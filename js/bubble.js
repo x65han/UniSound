@@ -35,7 +35,6 @@ function bubbleAnimation(){
             for(width = 0; width < c.width; width += this.density){
                pixel = imageData.data[((width + (height * c.width)) * 4) - 1];
                   //Pixel is black from being drawn on.
-                //   console.log('pixel: ' + pixel);
                   if(pixel == 255){
                       var temp = {
                           currentX: this.getRandomNumber(c.width),
@@ -46,7 +45,6 @@ function bubbleAnimation(){
                           color: this.getRandomColor()
                       }
                       bubble.push(temp);
-                    //   console.log(width + ' ' + height);
                   }
             }
         }
