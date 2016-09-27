@@ -46,6 +46,13 @@ io.on('connection', function(socket){
 	        console.log("The read failed: " + errorObject.code);
 	    });
 	});
+	socket.on('request channel message', function(channel_name){
+		ref.child(channel_name).on("value", function(snapshot){
+			socket.emit("distribute channel message",snapshot.val());
+	    },function(errorObject){
+	        console.log('cannot get messages from: ' + channelRequest);
+	    });
+	});
 });
 //REST
 app.get('/forceUpdate', function (req, res) {io.emit('force update',true);res.send(true)});

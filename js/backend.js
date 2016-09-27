@@ -1,5 +1,5 @@
 function applyMessageOnUI(messageData){
-    console.log("applying message onUIIIUIUIUIUI");
+    console.log("applying message onUIIIUIUIUIUI: " + current_user_state);
     for(var message in messageData){
         if(messageData[message].sender == username)
             OutgoingBubble(messageData[message].detail);
@@ -38,17 +38,16 @@ function establishConnection(){
         current_user_state = 3;
     });
     socket.on('distribute channels', function(data){
-        if(data.length != channels.length){
+        if(environmentSetup != 3){
             channels = data;
             environmentSetup++;
         }
     });
-}
-function getAndLoadMessageFromChannel(){//Navigate to according channel & grab specific channel detail
-    ref.child(current_user_channel).on("value", function(snapshot){
-        applyMessageOnUI(snapshot.val());
-    },function(errorObject){
-        console.log('cannot get messages from: ' + channelRequest);
+    socket.on('distribute channel message', function(data){
+        if(environmentMessageReady == false)    applyMessageOnUI(data);
+        environmentMessageReady = true;
     });
 }
- 
+function getAndLoadMessageFromChannel(){//Navigate to according channel & grab specific channel detail
+    socket.emit("request channel message",current_user_channel);
+}
