@@ -48,6 +48,18 @@ function establishConnection(){
         environmentMessageReady = true;
     });
 }
+
+function registerUserWithServer(username){
+    socket.emit('register user', username, function(response){
+        sanityCheckUsername = response;
+        console.log(response);
+        if(response == false){
+            alert("Username Exist & please try a different Username");
+            clearInterval(sanityCheckTimer);
+            $('.username-input').val('');
+        }
+    });
+}
 function getAndLoadMessageFromChannel(){//Navigate to according channel & grab specific channel detail
     socket.emit("request channel message",current_user_channel);
 }
