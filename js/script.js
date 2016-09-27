@@ -2,6 +2,7 @@
 var REST = window.location.href.slice(0, window.location.href.length - 1);
 var environmentSetup = 0, environmentMessageReady = false;
 var socket,
+    sanityCheckTimer,
     current_user_state = 0,
     hard_code_style_length = 0,
     backgroundImageFlashingOrder = 0,
@@ -58,7 +59,7 @@ window.onload = function(){
         }
     }
 };
-
+var sanityCheckUsername = false;
 function userRequestZoneTravel(current_zone, ele){
     //validation of travelling from
     if(current_zone == 1){
@@ -66,7 +67,22 @@ function userRequestZoneTravel(current_zone, ele){
             system(true,'Name cannot be empty!');
             return;
         }else{
+            if(sanityCheckUsername  == false){
+                sanityCheckTimer = setInterval(function(){
+                    console.log('Username Sanity Check');
+                    if(sanityCheckUsername == true){
+                        clearInterval(sanityCheckTimer);
+                        userRequestZoneTravel(1,null);
+                        console.log('Sanity Complete');
+                        console.log('==========================');
+                    }
+                }, 100);
+            }
             username = $('.username-input').val();
+            if(sanityCheckUsername == false){
+                registerUserWithServer(username);
+                return;
+            }
             console.log('Username: ' + username);
             $('.username').html(username);
             clearInterval(bubbleTimer);
