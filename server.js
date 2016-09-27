@@ -37,6 +37,15 @@ io.on('connection', function(socket){
 		ref.child(msg.channel).update(internal_message_wrapper);
 		io.emit('new message',msg);
 	});
+	socket.on('request channels', function(name){
+		ref.on("value",function(snapshot){
+	        var internal_channels = [];
+	        for(var one in snapshot.val()) internal_channels.push(one);
+			socket.emit('distribute channels',internal_channels);
+	    },function(errorObject) {
+	        console.log("The read failed: " + errorObject.code);
+	    });
+	});
 });
 //REST
 app.get('/forceUpdate', function (req, res) {io.emit('force update',true);res.send(true)});
