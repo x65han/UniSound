@@ -34,6 +34,7 @@ function establishConnection(){
         system(true, 'Reloading messages');
         current_user_state = 2;
         clearMessages();
+        environmentMessageReady = false;
         getAndLoadMessageFromChannel();
         current_user_state = 3;
     });
