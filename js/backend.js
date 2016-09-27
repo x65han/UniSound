@@ -21,6 +21,7 @@ function sendMessage(){
 }
 function establishConnection(){
     socket = io.connect("");
+    socket.emit("request channels",username);
     socket.on('new message', function(data){
         if(data.channel != current_user_channel) return;
         console.log('scoket new message: ' + data.message);
@@ -35,6 +36,12 @@ function establishConnection(){
         getAndLoadMessageFromChannel();
         current_user_state = 3;
     });
+    socket.on('distribute channels', function(data){
+        if(data.length != channels.length){
+            channels = data;
+            environmentSetup++;
+        }
+    });
 }
 function getAndLoadMessageFromChannel(){//Navigate to according channel & grab specific channel detail
     ref.child(current_user_channel).on("value", function(snapshot){
@@ -44,15 +51,15 @@ function getAndLoadMessageFromChannel(){//Navigate to according channel & grab s
     });
 }
 
-function getAndLoadChannels(){
-    ref.on("value",function(snapshot){
-        if(environmentSetup >= 3) return;
-        channels_array = [];
-        for(var one in snapshot.val()) channels_array.push(one);
-        channels = channels_array;
-        environmentSetup++;
-        console.log('channels below: ' + channels);
-    },function(errorObject) {
-        console.log("The read failed: " + errorObject.code);
-    });
-}
+// function getAndLoadChannels(){
+//     ref.on("value",function(snapshot){
+//         if(environmentSetup >= 3) return;
+//         channels_array = [];
+//         for(var one in snapshot.val()) channels_array.push(one);
+//         channels = channels_array;
+//         environmentSetup++;
+//         console.log('channels below: ' + channels);
+//     },function(errorObject) {
+//         console.log("The read failed: " + errorObject.code);
+//     });
+// }
