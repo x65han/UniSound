@@ -1,4 +1,5 @@
 function applyMessageOnUI(messageData){
+    console.log("applying message onUIIIUIUIUIUI");
     for(var message in messageData){
         if(messageData[message].sender == username)
             OutgoingBubble(messageData[message].detail);
@@ -45,21 +46,9 @@ function establishConnection(){
 }
 function getAndLoadMessageFromChannel(){//Navigate to according channel & grab specific channel detail
     ref.child(current_user_channel).on("value", function(snapshot){
-        if(current_user_state == 2)    applyMessageOnUI(snapshot.val());
+        applyMessageOnUI(snapshot.val());
     },function(errorObject){
         console.log('cannot get messages from: ' + channelRequest);
     });
 }
-
-// function getAndLoadChannels(){
-//     ref.on("value",function(snapshot){
-//         if(environmentSetup >= 3) return;
-//         channels_array = [];
-//         for(var one in snapshot.val()) channels_array.push(one);
-//         channels = channels_array;
-//         environmentSetup++;
-//         console.log('channels below: ' + channels);
-//     },function(errorObject) {
-//         console.log("The read failed: " + errorObject.code);
-//     });
-// }
+ 
