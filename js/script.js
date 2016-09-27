@@ -7,12 +7,10 @@ var socket,
     hard_code_style_length = 0,
     backgroundImageFlashingOrder = 0,
     channels_participation = [3,4,1,2,5,2,1],
-    chat_environment_color,current_user_channel,username,rainbow, channels,channel = '';
+    chat_environment_color,current_user_channel,username,rainbow, channels=[],channel = '';
 //logic
 function completeSetup(){
     applyZoneTravel(1);
-    //Connect to socket io
-    establishConnection();
     // Local UI setup
     colorChange();
     var backgroundImageFlashing = setInterval(function(){colorChange();}, 5000);
@@ -20,7 +18,8 @@ function completeSetup(){
     loadChannels(true);
 }
 window.onload = function(){
-    getAndLoadChannels();
+    //Connect to socket io
+    establishConnection();
     $.get(REST + '/getRainbowColorArray', function(data) {rainbow = data;environmentSetup++;});
     $.get(REST + '/getChannelScript', function(data) {channel = data;environmentSetup++;});
     //bubbleCanvas animation
