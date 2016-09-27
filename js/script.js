@@ -1,6 +1,5 @@
 //configuration varible
 var REST = window.location.href.slice(0, window.location.href.length - 1);
-var ref = new Firebase("https://unisoundpower.firebaseio.com/channels");
 var environmentSetup = 0, environmentMessageReady = false;
 var socket,
     current_user_state = 0,
