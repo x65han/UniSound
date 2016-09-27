@@ -2,7 +2,7 @@
 var express = require('express');
 var app = express();
 // Socket.io Setup
-var users,connections = [];
+var nickname = [], connections = [];
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 //FireBase Setup
@@ -18,12 +18,23 @@ app.set('view engine', 'html');
 // socket
 io.on('connection', function(socket){
 	connections.push(socket);
-    console.log('Connected: %s sockets connected', connections.length);
-
+	console.log('Connected: %s sockets connected || %s registered users', connections.length, nickname.length);
+	// register users
+	socket.on('register user', function(username, response){
+        if(nickname.indexOf(username) != -1){
+			response(false);
+		}else{
+			socket.nickname = username;
+			nickname.push(username);
+			response(true);
+		}
+		console.log('%s connected: %s sockets connected || %s registered users',username , connections.length, nickname.length);
+	});
     // Disconnect
     socket.on('disconnect', function(data){
 		connections.splice(connections.indexOf(socket), 1);
-		console.log('Disconnected: %s sockets connected', connections.length);
+		nickname.splice(nickname.indexOf(socket.nickname),1);
+		console.log('%s disconnected: %s sockets connected || %s registered users', socket.nickname, connections.length, nickname.length);
     });
 	//socket.io Functions
 	socket.on('register message', function(msg){
@@ -56,7 +67,7 @@ io.on('connection', function(socket){
 });
 //REST
 app.get('/forceUpdate', function (req, res) {io.emit('force update',true);res.send(true)});
-app.get('/connections', function (req, res) {res.send("Number of Connection: " + connections.length)});
+app.get('/connections', function (req, res) {res.send('Connected: ' + connections.length + ' sockets connected || ' + nickname.length + ' registered users')});
 app.get('/', function(request, response) {response.sendFile(__dirname + '/index.html');});
 app.get('/getChannelScript', function (req, res) {res.status(200).send(channel_script);});
 app.get('/getRainbowColorArray', function (req, res) {res.status(200).send(rainbow_array);});
