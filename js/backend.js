@@ -8,7 +8,7 @@ function applyMessageOnUI(messageData){
     }
 }
 function sendMessage(){
-    if($('#message').val().trim() == '') return;
+    if($('.chat-dashboard').css('border-bottom-width') != '2px' || $('#message').val().trim() == '')return;
     console.log('sending message');
     var message_wrapper = {
         'channel': current_user_channel,
@@ -24,8 +24,8 @@ function establishConnection(){
     socket = io.connect("");
     socket.emit("request channels",username);
     socket.on('new message', function(data){
-        if(data.channel != current_user_channel) return;
-        console.log('scoket new message: ' + data.message);
+        console.log('SOCKET Received new message from:  ' + data.signature + " in channel: " + data.channel);
+        console.log("Message Detail: " + data.message);
         if(data.signature == username){OutgoingBubble(data.message);}
         else IncomingBubble(data.message, data.signature);
         showLatestMessage();
