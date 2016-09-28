@@ -1,8 +1,9 @@
 //configuration varible
 var REST = window.location.href.slice(0, window.location.href.length - 1);
 var environmentSetup = 0, environmentMessageReady = false;
+var sanityCheckTimer, hackerTimer
 var socket,
-    sanityCheckTimer,
+    hackerWatch = 0,
     current_user_state = 0,
     hard_code_style_length = 0,
     backgroundImageFlashingOrder = 0,
@@ -104,6 +105,8 @@ function userRequestZoneTravel(current_zone, ele){
         socket.emit('unregister channel',current_user_channel, function(response){
             console.log(response);
         });
+        // stop hacker timer
+        clearInterval(hackerTimer);
         current_user_channel = '';
         environmentMessageReady = false;
     }else{
@@ -168,6 +171,10 @@ function applyZoneTravel(newState){
         //input autofocus
         document.getElementById('message').value = '';
         document.getElementById('message').select();
+        //start hacker timer
+        hackerTimer = setInterval(function(){
+            hackerWatch += 0.5;
+        }, 500);
         //Reset channel color
         var channel_avatar_array = document.getElementsByClassName('channel-avatar');
         for(var x = 0;x < channels.length;x++)  channel_avatar_array[x].style.transform = "translateX(40px) translateY(-41px) rotate(180deg)";
