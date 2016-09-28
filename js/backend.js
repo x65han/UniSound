@@ -9,7 +9,8 @@ function applyMessageOnUI(messageData){
 }
 function sendMessage(){
     console.log('Checking requirements before sending');
-    if($('.chat-dashboard').css('border-bottom-width') != '2px' || $('#message').val().trim() == '')return;
+    if($('#message').val().trim() == '')return;
+    if(hackerWatch < 0.5){system(true, "Too Fast");$('#message').val('');return;}
     console.log('sending message');
     var message_wrapper = {
         'channel': current_user_channel,
@@ -20,6 +21,7 @@ function sendMessage(){
     setTimeout(function(){ $('.chat-dashboard').css('border-bottom-width','2px'); }, 120);
     $('#message').val('');
     socket.emit('register message', message_wrapper);
+    hackerWatch = 0;
 }
 function establishConnection(){
     socket = io.connect("");
