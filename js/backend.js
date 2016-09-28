@@ -8,6 +8,7 @@ function applyMessageOnUI(messageData){
     }
 }
 function sendMessage(){
+    console.log('Checking requirements before sending');
     if($('.chat-dashboard').css('border-bottom-width') != '2px' || $('#message').val().trim() == '')return;
     console.log('sending message');
     var message_wrapper = {
