@@ -222,18 +222,33 @@ function applyCanvas(){
     ctx_button.fillstyle = arrayIncrease(3);
     ctx_button.fill();
 }
+var systemCheckDB = 1.1;
+var systemSpam = 0;
+var systemTimer = setInterval(function(){
+    if(systemCheckDB > 2) return;
+    else  systemCheckDB += 0.11;
+    if(systemCheckDB > 1){
+        setTimeout(function(){
+            $('.system').css('font-size','0px');
+            $('.system').css('width','0px');
+            $('.system').css('color','#00F0B5');
+        }, 10);
+    }
+}, 100);
 function showSystemMessage(decision){
-  if($('.system').width() > 0 && decision == true )return;
-  else if(decision == false){
-    $('.system').css('width','0px');
-    setTimeout(function(){$('.system').addClass('hidden');}, 1000);
-  }
-  else if(decision == true){
-      $('.system').removeClass('hidden');
-      setTimeout(function(){$('.system').css('width','200px');}, 10);
-      setTimeout(function(){$('.system').css('font-size','24px');}, 500);
-      setTimeout(function(){showSystemMessage(false);$('.system').css('font-size','1px');}, 2000);
-  }
+     //show system message
+    $('.system').removeClass('hidden');
+    $('.system').css('font-size','16px');
+    setTimeout(function(){$('.system').css('width','200px');}, 10);
+    //check system spamming
+    if(systemCheckDB < 1){
+        console.log('triggered  ');
+        systemSpam = 0;
+        $('.system').css('background-color','white');
+        $('.system').css('color','red');
+        setTimeout(function(){$('.system').css('background-color','#333');}, 200);
+    }
+    systemCheckDB = 0;
 }
 function setSystemMessage(message){
   $('.system').html(message);
