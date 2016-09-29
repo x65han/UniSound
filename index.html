@@ -47,8 +47,15 @@
     </div>
     <div class='chat-dashboard border'>
         <!-- Dashboard Setup -->
-        <textarea class='interactive' id='message' autofocus></textarea>
-        <button onclick='sendMessage()' id='submit-message'>Send</button>
+        <div class='col-lg-8 col-md-8 col-sm-8 col-xs-6' style='padding-left:0px;'>
+            <textarea class='interactive' id='message' autofocus></textarea>
+        </div>
+        <div class='col-lg-1 col-md-1 col-sm-1 col-xs-2'>
+            <button onclick='uploadFile()' id='upload' class='fa fa-upload'></button>
+        </div>
+        <div class='col-lg-3 col-md-3 col-sm-3 col-xs-4'>
+            <button onclick='sendMessage()' id='submit-message'>Send</button>
+        </div>
     </div>
 </div>
 
