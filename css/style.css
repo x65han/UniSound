@@ -156,6 +156,9 @@ body{
 	border-top-right-radius: 50%;transition: all 0.2s ease-out;padding-top: 27px;
 	position:absolute;bottom:0;left:0;right:0;margin-right:auto;margin-left:auto;
 }
+.chat-dashboard div{
+	padding-right:0px;
+}
 .bubble-container{
 	width:80vw;
 	display:table;
@@ -183,7 +186,7 @@ body{
 	line-height:2;
 	outline:none;
 	height:50px;
-	width: 70%;
+	width: 100%;
 	border-top-right-radius: 20%;
 	border-top-left-radius:  20%;
 	background-color:transparent;
@@ -192,10 +195,10 @@ body{
 	display:inline-block;
 	-webkit-appearance: button;
 	cursor: pointer;font-weight: bold;
-	color:#fff; float:right; margin-top:10px;
-	margin-bottom:20px;
+	color:#fff; float:right;
+	margin-top:12px;
 	height:8vh;	max-height: 30px;
-	width:30%; max-width:130px;
+	width:100%;
 	background-color: #337ab7;
 	border: 1px solid #337ab7;
 	padding:6px 12px 6px 12px;
@@ -205,6 +208,16 @@ body{
 	touch-action:manipulation;
 	border-radius:4px;
 	-ms-touch-action:manipulation;
+}
+#upload{
+	margin-top:10px;
+	cursor:pointer;
+	float:right;
+	width: 36px;
+	height:36px;
+	background-color:transparent;
+	border: 2px solid #337ab7;
+	border-radius:50%;
 }
 /*Responsive Design*/
 @media screen and (max-width: 991px) {
