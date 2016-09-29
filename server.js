@@ -29,6 +29,7 @@ io.on('connection', function(socket){
 			response(true);
 		}
 		console.log('%s connected: %s sockets connected || %s registered users',username , connections.length, nickname.length);
+		console.log(nickname);
 	});
 	// register channel
 	socket.on('register channel', function(channel, response){
@@ -78,7 +79,7 @@ io.on('connection', function(socket){
 	});
 });
 //REST
-app.get('/forceUpdate', function (req, res) {io.emit('force update',true);res.send(true)});
+app.get('/forceUpdate', function (req, res) {io.emit('force update',true);res.send(true);for(var x=0;x<10;x++)console.log("Force Updating");});
 app.get('/connections', function (req, res) {res.send('Connected: ' + connections.length + ' sockets connected || ' + nickname.length + ' registered users')});
 app.get('/', function(request, response) {response.sendFile(__dirname + '/index.html');});
 app.get('/getChannelScript', function (req, res) {res.status(200).send(channel_script);});
