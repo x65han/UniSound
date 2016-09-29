@@ -64,8 +64,8 @@ var sanityCheckUsername = false;
 function userRequestZoneTravel(current_zone, ele){
     //validation of travelling from
     if(current_zone == 1){
-        if($('.username-input').val() == ''){
-            system(true,'Name cannot be empty!');
+        if($('.username-input').val() == '' || $('.username-input').val().length < 2){
+            system(true,'Name too short!');
             return;
         }else{
             if(sanityCheckUsername  == false){
