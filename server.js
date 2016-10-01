@@ -85,6 +85,7 @@ app.get('/', function(request, response) {response.sendFile(__dirname + '/index.
 app.get('/getChannelScript', function (req, res) {res.status(200).send(channel_script);});
 app.get('/getRainbowColorArray', function (req, res) {res.status(200).send(rainbow_array);});
 app.get('/getTime', function (req, res) {res.status(200).send(getTimeStamp())});
+app.get('/ping', function (req, res) {res.status(200).send(getTimeStamp())});
 //Local Data
 // var channels_array = ['Sports','Movie','Food','Finance','Politics','Travel','Cars','Shopping','Career'];
 var channels_array = [];
