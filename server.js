@@ -1,5 +1,6 @@
 //Environment Setup
 var express = require('express');
+var request = require("request");
 var app = express();
 // Socket.io Setup
 var nickname = [], connections = [];
@@ -86,9 +87,17 @@ app.get('/getChannelScript', function (req, res) {res.status(200).send(channel_s
 app.get('/getRainbowColorArray', function (req, res) {res.status(200).send(rainbow_array);});
 app.get('/getTime', function (req, res) {res.status(200).send(getTimeStamp())});
 app.get('/ping', function (req, res) {
-	for(var x = 0;x < 10;x++) 	console.log("System PING!!!!");
+	console.log("System PING!!!!: " + getTimeStamp());
 	res.status(200).send(getTimeStamp());
 });
+//Heroku Constant ping
+setInterval(function(){ pingMaster();}, 90000);
+function pingMaster(){
+	console.log("Re-vive Master =-=-=-=-=-");
+	request('https://forcefocus.herokuapp.com/ping', function (error, response, body) {
+		console.log(response.toString().length);
+	});
+}
 //Local Data
 // var channels_array = ['Sports','Movie','Food','Finance','Politics','Travel','Cars','Shopping','Career'];
 var channels_array = [];
