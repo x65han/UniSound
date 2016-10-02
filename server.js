@@ -91,7 +91,7 @@ app.get('/ping', function (req, res) {
 	res.status(200).send(getTimeStamp());
 });
 //Heroku Constant ping
-setInterval(function(){ pingMaster();}, 90000);
+setInterval(function(){ pingMaster();}, 900000);
 function pingMaster(){
 	console.log("Re-vive Master =-=-=-=-=-");
 	request('https://forcefocus.herokuapp.com/ping', function (error, response, body) {
