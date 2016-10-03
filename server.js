@@ -3,7 +3,7 @@ var express = require('express');
 var request = require("request");
 var app = express();
 // Socket.io Setup
-var nickname = [], connections = [];
+var nickname = [], channels = [], connections = [];
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 //FireBase Setup
@@ -35,13 +35,13 @@ io.on('connection', function(socket){
 	// register channel
 	socket.on('register channel', function(channel, response){
 		socket.join(channel);
-		response(socket.nickname + ' has registered to: ' + channel);
+		socket.channel = channel;
 		console.log(socket.nickname + ' has registered to: ' + channel);
 	});
 	// unregister channel
 	socket.on('unregister channel', function(channel, response){
 		socket.leave(channel);
-		response(socket.nickname + ' has LEFT to: ' + channel);
+		delete socket.channel;
 		console.log(socket.nickname + ' has LEFT to: ' + channel);
 	});
     // Disconnect
@@ -59,13 +59,14 @@ io.on('connection', function(socket){
 	        "sender" : msg.signature
 	    };
 		console.log('registering: ');console.log(msg);
-		ref.child(msg.channel).update(internal_message_wrapper);
-		io.to(msg.channel).emit("new message", msg);
+		ref.child(socket.channel).update(internal_message_wrapper);
+		io.to(socket.channel).emit("new message", msg);
 	});
 	socket.on('request channels', function(name){
 		ref.on("value",function(snapshot){
 	        var internal_channels = [];
 	        for(var one in snapshot.val()) internal_channels.push(one);
+			channels = internal_channels;
 			socket.emit('distribute channels',internal_channels);
 	    },function(errorObject) {
 	        console.log("The read failed: " + errorObject.code);
@@ -78,10 +79,39 @@ io.on('connection', function(socket){
 	        console.log('cannot get messages from: ' + channelRequest);
 	    });
 	});
+	socket.on('create new channel', function(newChannelName, response){
+		console.log(newChannelName + ' ' + channels.indexOf(newChannelName));
+		if(channels.indexOf(newChannelName) == -1){
+			//Constructing JSON
+			var internalChannelWrapper = {};internalChannelWrapper[getTimeStamp()] = {
+				"detail" : "Chat " + newChannelName + " created",
+		        "sender" : "UniSound Team"
+		    };
+			ref.child(newChannelName).update(internalChannelWrapper);
+			if(channels.indexOf(newChannelName) == -1)
+				channels.push(newChannelName);
+			console.log("New Channel Created: " + newChannelName);
+			return;
+		}
+		response(true);
+		console.log("Channel Pre-Exists: " + newChannelName);
+	});
+	function requestChannels(){
+		ref.on("value",function(snapshot){
+	        var internal_channels = [];
+	        for(var one in snapshot.val()) internal_channels.push(one);
+			channels = internal_channels;
+			console.log("FireBase: \n");
+			console.log(channels);
+	    },function(errorObject) {
+	        console.log("The read failed: " + errorObject.code);
+	    });
+	}
 });
 //REST
 app.get('/forceUpdate', function (req, res) {io.emit('force update',true);res.send(true);for(var x=0;x<10;x++)console.log("Force Updating");});
 app.get('/connections', function (req, res) {res.send('Connected: ' + connections.length + ' sockets connected || ' + nickname.length + ' registered users')});
+app.get('/channels', function (req, res) {res.send('Channels:\n ' + channels)});
 app.get('/', function(request, response) {response.sendFile(__dirname + '/index.html');});
 app.get('/getChannelScript', function (req, res) {res.status(200).send(channel_script);});
 app.get('/getRainbowColorArray', function (req, res) {res.status(200).send(rainbow_array);});
