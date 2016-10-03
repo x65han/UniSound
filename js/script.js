@@ -1,14 +1,14 @@
 //configuration varible
 var REST = window.location.href.slice(0, window.location.href.length - 1);
 var environmentSetup = 0, environmentMessageReady = false;
-var sanityCheckTimer, hackerTimer
+var sanityCheckTimer, hackerTimer;
 var socket,
     hackerWatch = 0,
     current_user_state = 0,
     hard_code_style_length = 0,
     backgroundImageFlashingOrder = 0,
-    channels_participation = [3,4,1,2,5,2,1],
-    chat_environment_color,current_user_channel,username,rainbow, channels=[],channel = '';
+    channels_participation = [3,4,1,2,5,2,1,3,1,2,4,8,2,2],
+    location,chat_environment_color,current_user_channel,username,rainbow, channels=[],channel = '';
 //logic
 function completeSetup(){
     applyZoneTravel(1);
@@ -16,6 +16,8 @@ function completeSetup(){
     colorChange();
     var backgroundImageFlashing = setInterval(function(){colorChange();}, 5000);
     applyCanvas();
+    getLocation();
+    // Apply channels to UI
     loadChannels(true);
 }
 window.onload = function(){
@@ -259,7 +261,10 @@ function system(decision,message){
   showSystemMessage(decision);
 }
 function loadChannels(decision){
-    for(var x = 0; x < channels.length;x++){// Generate Channel Box
+    //Garbage Collection
+    $('.channel-box').html('');
+    // Generate Channel Box
+    for(var x = 0; x < channels.length;x++){
         var pre_existing_code = $('.channel-box').html();
         $('.channel-box').html(pre_existing_code + channel);
     }
