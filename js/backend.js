@@ -2,15 +2,18 @@ function applyMessageOnUI(messageData){
     console.log("applying message onUIIIUIUIUIUI: " + current_user_state);
     for(var message in messageData){
         if(messageData[message].sender == username)
-            OutgoingBubble(messageData[message].detail);
+            OutgoingBubble(false,messageData[message].detail);
         else
-            IncomingBubble(messageData[message].detail, messageData[message].sender);
+            IncomingBubble(false,messageData[message].detail, messageData[message].sender);
     }
+    setTimeout(function(){ showLatestMessage(); }, 500);
 }
 function sendMessage(){
     console.log('Checking requirements before sending');
     if($('#message').val().trim() == '')return;
-    if(hackerWatch < 0.5){system(true, "Too Fast");$('#message').val('');return;}
+    if(hackerWatch < 0.5 && hackerWatch != 0){
+        system(true, "Too Fast");$('#message').val('');return;
+    }
     console.log('sending message');
     var message_wrapper = {
         'message': $('#message').val().trim(),
@@ -28,19 +31,20 @@ function establishConnection(){
     socket.on('new message', function(data){
         console.log('SOCKET Received new message from:  ' + data.signature + " in channel: " + data.channel);
         console.log("Message Detail: " + data.message);
-        if(data.signature == username){OutgoingBubble(data.message);}
-        else IncomingBubble(data.message, data.signature);
+        if(data.signature == username){OutgoingBubble(true,data.message);}
+        else IncomingBubble(true,data.message, data.signature);
         showLatestMessage();
     });
     socket.on('force update', function(data){
-        // if(current_user_state == 3){
+        alert('Force update failed');
+        if(current_user_state == 3){
             system(true, 'Reloading messages');
             current_user_state = 2;
             clearMessages();
             environmentMessageReady = false;
             getAndLoadMessageFromChannel();
             current_user_state = 3;
-        // }
+        }
     });
     socket.on('distribute channels', function(data){
         if(environmentSetup != 3){
