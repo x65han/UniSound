@@ -295,7 +295,8 @@ function OutgoingBubble(hasAnimation,message){
         $('.temp').removeClass('temp');
         return;
     }
-    //OtherWise Play Animation
+    //OtherWise Play Animation and Sound
+    new Audio('img/outgoing.mp3').play();
     setTimeout(function(){
         if(message.includes("&#") == true){
             $('.temp').addClass('emoticon');
@@ -314,7 +315,8 @@ function IncomingBubble(hasAnimation,message,author){
         $('.tmp').removeClass('tmp');
         return;
     }
-    //OtherWise Play Animation
+    //OtherWise Play Animation and Sound
+    new Audio('img/incoming.mp3').play();
     setTimeout(function(){
         if(message.includes("&#") == true)  $('.tmp').addClass('emoticon');
         $('.tmp').addClass('incoming');
