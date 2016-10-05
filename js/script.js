@@ -9,6 +9,8 @@ var socket,
     backgroundImageFlashingOrder = 0,
     channels_participation = [3,4,1,2,5,2,1,3,1,2,4,8,2,2],
     location,chat_environment_color,current_user_channel,username,rainbow, channels=[],channel = '';
+var incomingAudio = new Audio('img/incoming.mp3');
+var outgoingAudio = new Audio('img/outgoing.mp3');
 //logic
 function completeSetup(){
     applyZoneTravel(1);
@@ -296,7 +298,7 @@ function OutgoingBubble(hasAnimation,message){
         return;
     }
     //OtherWise Play Animation and Sound
-    new Audio('img/outgoing.mp3').play();
+    outgoingAudio.play();
     setTimeout(function(){
         if(message.includes("&#") == true){
             $('.temp').addClass('emoticon');
@@ -316,7 +318,7 @@ function IncomingBubble(hasAnimation,message,author){
         return;
     }
     //OtherWise Play Animation and Sound
-    new Audio('img/incoming.mp3').play();
+    incomingAudio.play();
     setTimeout(function(){
         if(message.includes("&#") == true)  $('.tmp').addClass('emoticon');
         $('.tmp').addClass('incoming');
