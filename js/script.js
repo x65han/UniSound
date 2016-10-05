@@ -286,17 +286,25 @@ function loadChannels(decision){
 }
 function OutgoingBubble(message){
     if(message.includes("&#") == false)
-        var outgoingMessage = "<div class='bubble-container border'><div class='bubble outgoing rainbow highlightable'>" + message + "</div></div>";
-    else {
-        var outgoingMessage = "<div class='bubble-container border'><div class='bubble outgoing highlightable' style='font-size:50px;border:none;'>" + message + "</div></div>";
-    }
+        var outgoingMessage = "<div class='bubble-container border'><div class='temp bubble rainbow highlightable'>" + message + "</div></div>";
+    else
+        var outgoingMessage = "<div class='bubble-container border'><div class='temp bubble highlightable' style='font-size:30px;border:none;'>" + message + "</div></div>";
+
+    setTimeout(function(){
+        $('.temp').addClass('outgoing');
+        $('.temp').removeClass('temp');
+    }, 50);
     document.getElementsByClassName('chat-window')[0].innerHTML += outgoingMessage;
 }
 function IncomingBubble(message,author){
     if(message.includes("&#") == false)
-        var incomingMessage = "<div class='bubble-container border'><div class='bubble incoming highlightable'>" + message + "</div><div class='bubble-sub'>- " + author + "</div> </div>";
+        var incomingMessage = "<div class='bubble-container border'><div class='bubble tmp highlightable'>" + message + "</div><div class='bubble-sub'>- " + author + "</div> </div>";
     else
-        var incomingMessage = "<div class='bubble-container border'><div class='bubble incoming highlightable' style='font-size:50px;'>" + message + "</div><div class='bubble-sub'>- " + author + "</div> </div>";
+        var incomingMessage = "<div class='bubble-container border'><div class='bubble tmp highlightable' style='font-size:50px;'>" + message + "</div><div class='bubble-sub'>- " + author + "</div> </div>";
+    setTimeout(function(){
+        $('.tmp').addClass('incoming');
+        $('.tmp').removeClass('tmp');
+    }, 50);
     document.getElementsByClassName('chat-window')[0].innerHTML += incomingMessage;
 }
 function showLatestMessage(){// show latest Message
