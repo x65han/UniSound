@@ -168,7 +168,6 @@ function applyZoneTravel(newState){
             $('.container-chat').css('transform','rotateY(0deg) rotateX(0deg)');
             $('.container-chat').css('width','80vw');
             $('.container-chat').css('height','100vh');
-            showLatestMessage();
         }, 50);
         //input autofocus
         document.getElementById('message').value = '';
@@ -284,31 +283,47 @@ function loadChannels(decision){
         channel_avatar_bottom_array[i].style.backgroundColor = rainbow[arrayIncrease(i)];
     }
 }
-function OutgoingBubble(message){
-    if(message.includes("&#") == false)
-        var outgoingMessage = "<div class='bubble-container border'><div class='temp bubble rainbow highlightable'>" + message + "</div></div>";
-    else
-        var outgoingMessage = "<div class='bubble-container border'><div class='temp bubble highlightable' style='font-size:30px;border:none;'>" + message + "</div></div>";
-
-    setTimeout(function(){
+function OutgoingBubble(hasAnimation,message){
+    var outgoingMessage = "<div class='bubble-container border'><div class='temp bubble highlightable rainbow'>" + message + "</div></div>";
+    document.getElementsByClassName('chat-window')[0].innerHTML += outgoingMessage;
+    if(hasAnimation == false){
+        if(message.includes("&#") == true){
+            $('.temp').addClass('emoticon');
+            $('.temp').removeClass('rainbow');
+        }
         $('.temp').addClass('outgoing');
         $('.temp').removeClass('temp');
-    }, 50);
-    document.getElementsByClassName('chat-window')[0].innerHTML += outgoingMessage;
-}
-function IncomingBubble(message,author){
-    if(message.includes("&#") == false)
-        var incomingMessage = "<div class='bubble-container border'><div class='bubble tmp highlightable'>" + message + "</div><div class='bubble-sub'>- " + author + "</div> </div>";
-    else
-        var incomingMessage = "<div class='bubble-container border'><div class='bubble tmp highlightable' style='font-size:50px;'>" + message + "</div><div class='bubble-sub'>- " + author + "</div> </div>";
+        return;
+    }
+    //OtherWise Play Animation
     setTimeout(function(){
+        if(message.includes("&#") == true){
+            $('.temp').addClass('emoticon');
+            $('.temp').removeClass('rainbow');
+        }
+        $('.temp').addClass('outgoing');
+        $('.temp').removeClass('temp');
+    }, 25);
+}
+function IncomingBubble(hasAnimation,message,author){
+    var incomingMessage = "<div class='bubble-container border'><div class='bubble tmp highlightable'>" + message + "</div><div class='bubble-sub'>- " + author + "</div> </div>";
+    document.getElementsByClassName('chat-window')[0].innerHTML += incomingMessage;
+    if(hasAnimation == false){
+        if(message.includes("&#") == true)  $('.tmp').addClass('emoticon');
         $('.tmp').addClass('incoming');
         $('.tmp').removeClass('tmp');
-    }, 50);
-    document.getElementsByClassName('chat-window')[0].innerHTML += incomingMessage;
+        return;
+    }
+    //OtherWise Play Animation
+    setTimeout(function(){
+        if(message.includes("&#") == true)  $('.tmp').addClass('emoticon');
+        $('.tmp').addClass('incoming');
+        $('.tmp').removeClass('tmp');
+    }, 25);
 }
 function showLatestMessage(){// show latest Message
-    $('.chat-window').animate({scrollTop : document.getElementsByClassName('chat-window')[0].scrollHeight},900);
+    var scrollHeight = document.getElementsByClassName('chat-window')[0].scrollHeight;
+    $('.chat-window').animate({scrollTop : scrollHeight},700);
 }
 function clearMessages(){// clear all messages from channel
     $('.chat-window').html('');

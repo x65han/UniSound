@@ -1,0 +1,76 @@
+[1mdiff --git a/js/script.js b/js/script.js[m
+[1mindex f2f6cb0..900afea 100644[m
+[1m--- a/js/script.js[m
+[1m+++ b/js/script.js[m
+[36m@@ -168,7 +168,6 @@[m [mfunction applyZoneTravel(newState){[m
+             $('.container-chat').css('transform','rotateY(0deg) rotateX(0deg)');[m
+             $('.container-chat').css('width','80vw');[m
+             $('.container-chat').css('height','100vh');[m
+[31m-            showLatestMessage();[m
+         }, 50);[m
+         //input autofocus[m
+         document.getElementById('message').value = '';[m
+[36m@@ -284,31 +283,47 @@[m [mfunction loadChannels(decision){[m
+         channel_avatar_bottom_array[i].style.backgroundColor = rainbow[arrayIncrease(i)];[m
+     }[m
+ }[m
+[31m-function OutgoingBubble(message){[m
+[31m-    if(message.includes("&#") == false)[m
+[31m-        var outgoingMessage = "<div class='bubble-container border'><div class='temp bubble rainbow highlightable'>" + message + "</div></div>";[m
+[31m-    else[m
+[31m-        var outgoingMessage = "<div class='bubble-container border'><div class='temp bubble highlightable' style='font-size:30px;border:none;'>" + message + "</div></div>";[m
+[31m-[m
+[32m+[m[32mfunction OutgoingBubble(hasAnimation,message){[m
+[32m+[m[32m    var outgoingMessage = "<div class='bubble-container border'><div class='temp bubble highlightable rainbow'>" + message + "</div></div>";[m
+[32m+[m[32m    document.getElementsByClassName('chat-window')[0].innerHTML += outgoingMessage;[m
+[32m+[m[32m    if(hasAnimation == false){[m
+[32m+[m[32m        if(message.includes("&#") == true){[m
+[32m+[m[32m            $('.temp').addClass('emoticon');[m
+[32m+[m[32m            $('.temp').removeClass('rainbow');[m
+[32m+[m[32m        }[m
+[32m+[m[32m        $('.temp').addClass('outgoing');[m
+[32m+[m[32m        $('.temp').removeClass('temp');[m
+[32m+[m[32m        return;[m
+[32m+[m[32m    }[m
+[32m+[m[32m    //OtherWise Play Animation[m
+     setTimeout(function(){[m
+[32m+[m[32m        if(message.includes("&#") == true){[m
+[32m+[m[32m            $('.temp').addClass('emoticon');[m
+[32m+[m[32m            $('.temp').removeClass('rainbow');[m
+[32m+[m[32m        }[m
+         $('.temp').addClass('outgoing');[m
+         $('.temp').removeClass('temp');[m
+[31m-    }, 50);[m
+[31m-    document.getElementsByClassName('chat-window')[0].innerHTML += outgoingMessage;[m
+[32m+[m[32m    }, 25);[m
+ }[m
+[31m-function IncomingBubble(message,author){[m
+[31m-    if(message.includes("&#") == false)[m
+[31m-        var incomingMessage = "<div class='bubble-container border'><div class='bubble tmp highlightable'>" + message + "</div><div class='bubble-sub'>- " + author + "</div> </div>";[m
+[31m-    else[m
+[31m-        var incomingMessage = "<div class='bubble-container border'><div class='bubble tmp highlightable' style='font-size:50px;'>" + message + "</div><div class='bubble-sub'>- " + author + "</div> </div>";[m
+[32m+[m[32mfunction IncomingBubble(hasAnimation,message,author){[m
+[32m+[m[32m    var incomingMessage = "<div class='bubble-container border'><div class='bubble tmp highlightable'>" + message + "</div><div class='bubble-sub'>- " + author + "</div> </div>";[m
+[32m+[m[32m    document.getElementsByClassName('chat-window')[0].innerHTML += incomingMessage;[m
+[32m+[m[32m    if(hasAnimation == false){[m
+[32m+[m[32m        if(message.includes("&#") == true)  $('.tmp').addClass('emoticon');[m
+[32m+[m[32m        $('.tmp').addClass('incoming');[m
+[32m+[m[32m        $('.tmp').removeClass('tmp');[m
+[32m+[m[32m        return;[m
+[32m+[m[32m    }[m
+[32m+[m[32m    //OtherWise Play Animation[m
+     setTimeout(function(){[m
+[32m+[m[32m        if(message.includes("&#") == true)  $('.tmp').addClass('emoticon');[m
+         $('.tmp').addClass('incoming');[m
+         $('.tmp').removeClass('tmp');[m
+[31m-    }, 50);[m
+[31m-    document.getElementsByClassName('chat-window')[0].innerHTML += incomingMessage;[m
+[32m+[m[32m    }, 25);[m
+ }[m
+ function showLatestMessage(){// show latest Message[m
+[31m-    $('.chat-window').animate({scrollTop : document.getElementsByClassName('chat-window')[0].scrollHeight},900);[m
+[32m+[m[32m    var scrollHeight = document.getElementsByClassName('chat-window')[0].scrollHeight;[m
+[32m+[m[32m    $('.chat-window').animate({scrollTop : scrollHeight},700);[m
+ }[m
+ function clearMessages(){// clear all messages from channel[m
+     $('.chat-window').html('');[m
