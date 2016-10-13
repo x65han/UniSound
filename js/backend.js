@@ -50,6 +50,7 @@ function establishConnection(){
         if(environmentSetup != 3){
             channels = data;
             environmentSetup++;
+            gettyManager(channels); 
         }
     });
     socket.on('distribute channel message', function(data){
