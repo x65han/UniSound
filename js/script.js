@@ -11,6 +11,7 @@ var socket,
     location,chat_environment_color,current_user_channel,username,rainbow, channels=[],channel = '';
 var incomingAudio = new Audio('img/incoming.mp3');
 var outgoingAudio = new Audio('img/outgoing.mp3');
+var channelImages = [];
 //logic
 function completeSetup(){
     applyZoneTravel(1);
@@ -136,9 +137,10 @@ function applyZoneTravel(newState){
         $('.container-chat').css('transform','rotateY(180deg) rotateX(180deg)');
         $('.container-chat').css('width','0px');
         $('.container-chat').css('height','0px');
-        var channel_avatar_array = document.getElementsByClassName('channel-avatar');
         setTimeout(function(){
-          for(var x = 0;x < channels.length;x++)  channel_avatar_array[x].style.transform = "translateX(40px) translateY(-41px) rotate(180deg)";
+            $('.channel-avatar').addClass('hidden');
+            $('.channel-bottom').css('height','0px');
+            $('.channel-avatar').css('transform','translateX(20px) translateY(-41px) rotate(180deg)');
         }, 10);
         break;
     case 2:
@@ -147,10 +149,13 @@ function applyZoneTravel(newState){
         $('.container-chat').css('transform','rotateY(180deg) rotateX(180deg)');
         $('.container-chat').css('width','0px');
         $('.container-chat').css('height','0px');
-        var channel_avatar_array = document.getElementsByClassName('channel-avatar');
         setTimeout(function(){
-          for(var x = 0;x < channels.length;x++)  channel_avatar_array[x].style.transform = "translateX(40px) translateY(-41px) rotate(0deg)";
-        }, 50);
+            $('.channel-bottom').css('height','150px');
+            $('.channel-avatar').removeClass('hidden');
+            setTimeout(function(){
+                $('.channel-avatar').css('transform','translateX(20px) translateY(-41px) rotate(0deg)');
+            }, 10);
+        }, 100);
         break;
     case 3:
         // body background style
@@ -178,9 +183,10 @@ function applyZoneTravel(newState){
         hackerTimer = setInterval(function(){
             hackerWatch += 0.5;
         }, 500);
-        //Reset channel color
-        var channel_avatar_array = document.getElementsByClassName('channel-avatar');
-        for(var x = 0;x < channels.length;x++)  channel_avatar_array[x].style.transform = "translateX(40px) translateY(-41px) rotate(180deg)";
+        //Reset channel box style
+        $('.channel-bottom').css('height','0px');
+        $('.channel-avatar').css('transform','translateX(20px) translateY(-41px) rotate(180deg)');
+        $('.channel-avatar').addClass('hidden');
         break;
     default:
         var message = 'Warning: internal system error';console.log(message);  alert(message);
@@ -272,6 +278,7 @@ function loadChannels(decision){
     //Register generated Channels
     var channel_array = document.getElementsByClassName('channel');
     var channel_top_array = document.getElementsByClassName('channel-top');
+    var channel_bottom_array = document.getElementsByClassName('channel-bottom');
     var channel_avatar_bottom_array = document.getElementsByClassName('channel-avatar-bottom');
     //Assign Attributes
     for(var i = 0; i < channels.length;i++){
@@ -279,6 +286,16 @@ function loadChannels(decision){
         channel_top_array[i].innerHTML = channels[i] + channel_top_array[i].innerHTML;
         channel_array[i].title = channels[i];
         channel_avatar_bottom_array[i].innerHTML = channels_participation[i] + channel_avatar_bottom_array[i].innerHTML;
+        channel_bottom_array[i].id = channels[i];
+        //Auto font size -> fit to div
+        if(channels[i].length > 8) {
+            channel_top_array[i].style.fontSize = "30px";
+            channel_top_array[i].style.paddingTop = "5px";
+        }
+        if(channels[i].length > 12){
+            channel_top_array[i].style.fontSize = "24px";
+            channel_top_array[i].style.paddingTop = "8px";
+        }
         // Assign Color
         channel_top_array[i].style.backgroundColor = rainbow[arrayIncrease(i)];
         channel_array[i].id = rainbow[arrayIncrease(i)];
