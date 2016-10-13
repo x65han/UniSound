@@ -125,7 +125,8 @@ setInterval(function(){ pingMaster();}, 1740 * 1000);
 function pingMaster(){
 	console.log("Re-vive Master =-=-=-=-=-");
 	request('https://forcefocus.herokuapp.com/ping', function (error, response, body) {
-		console.log(response.toString().length);
+		if(response == undefined) console.log("Nobody replies - embarrasement");
+		else console.log(response.toString().length);
 	});
 }
 //Local Data
