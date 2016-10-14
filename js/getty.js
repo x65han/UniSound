@@ -1,15 +1,12 @@
+var gettyVirgin = true;
 function gettyManager(data){
-    var iteration = Math.ceil(channels.length % 5);
     var index = 0;
-    for(var currentIndex = 0;currentIndex < iteration;currentIndex++){
-        setTimeout(function(){
-            gettyImage(channels[index++]);
-            gettyImage(channels[index++]);
-            gettyImage(channels[index++]);
-            gettyImage(channels[index++]);
-            gettyImage(channels[index++]);
-        }, 1001 * currentIndex);
-    }
+    for(var currentIteration = 0; currentIteration < channels.length;currentIteration++)
+        setTimeout(function(){gettyImage(channels[index++]);}, 201 * currentIteration);
+    if(gettyVirgin == true || gettyVirgin == false)
+        setTimeout(function(){gettyManager(channels);}, 1100 * channels.length);
+    if(gettyVirgin == true) gettyVirgin = false;
+    if(gettyVirgin == false) gettyVirgin = null;
 }
 function gettyImage(keyword){
     if(keyword == undefined) return;
