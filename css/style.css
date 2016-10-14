@@ -165,6 +165,7 @@ body{
 }
 .bubble{
 	position:relative;
+	word-wrap: break-word;
 	display:block;max-width:50vw;
 	margin:10px;padding:5px;
 	font-size:0px;
