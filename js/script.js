@@ -8,7 +8,7 @@ var socket,
     hard_code_style_length = 0,
     backgroundImageFlashingOrder = 0,
     channels_participation = [3,4,1,2,5,2,1,3,1,2,4,8,2,2],
-    location,chat_environment_color,current_user_channel,username,rainbow, channels=[],channel = '';
+    locationManager,chat_environment_color,current_user_channel,username,rainbow, channels=[],channel = '';
 var incomingAudio = new Audio('img/incoming.mp3');
 var outgoingAudio = new Audio('img/outgoing.mp3');
 var channelImages = [];
@@ -19,7 +19,7 @@ function completeSetup(){
     colorChange();
     var backgroundImageFlashing = setInterval(function(){colorChange();}, 5000);
     applyCanvas();
-    getLocation();
+    googleLocation();
     // Apply channels to UI
     loadChannels(true);
 }
