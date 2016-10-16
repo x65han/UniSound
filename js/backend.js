@@ -36,7 +36,6 @@ function establishConnection(){
         showLatestMessage();
     });
     socket.on('force update', function(data){
-        alert('Force update failed');
         if(current_user_state == 3){
             system(true, 'Reloading messages');
             current_user_state = 2;
