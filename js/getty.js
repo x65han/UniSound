@@ -1,7 +1,7 @@
 function gettyManager(data){
     var index = 0;
     for(var currentIteration = 0; currentIteration < channels.length;currentIteration++)
-        setTimeout(function(){gettyImage(channels[index++]);}, 202 * currentIteration);
+        setTimeout(function(){gettyImage(channels[index++]);}, 200 * currentIteration);
 }
 function gettyImage(keyword){
     if(keyword == undefined) return;
