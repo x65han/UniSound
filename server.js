@@ -181,6 +181,42 @@ function getTimeStamp(){
     // console.log(year);console.log(month);console.log(day);console.log(hour);console.log(minute);console.log(second);console.log(mili);
     return year + month + day + hour + minute + second + mili;
 }
+// Text Razor API
+app.get('/razor/:text', function (req, res) {
+	console.log("=-=-=-=-=-=-=-=-=-");
+	console.log("Razor: " + req.params.text);
+	var options = {
+		method: 'POST',
+		url: 'https://api.textrazor.com/',
+		dataType: "jsonp",
+		headers:{
+		 	'content-type': 'application/x-www-form-urlencoded',
+		 	'postman-token': 'd14287bb-e0c3-c0df-edc2-5affcb63f6d8',
+		 	'cache-control': 'no-cache',
+		 	'x-textrazor-key': '8575c3145b6d62735f8747f95b7879e7dbc7e6f13fbece95618d90ca'
+		},
+		form: { extractors: 'entities', text: req.params.text }
+	};
+
+	request(options, function (error, response, body) {
+	  if(error) res.send(false);
+	  // convert response body from string to JSON
+	  body = JSON.parse(body).response.entities;
+	  // Create new response object
+	  var temp = {};
+	  for(var x = 0;x < body.length;x++){
+		  var type = body[x].type[0].toString();
+		  var id = body[x].entityId.toString();
+		  temp[type] = id;
+	  }
+	  console.log(temp);
+	  res.json(temp);
+	});
+});
+
+function textRazor(text){
+	return temp;
+}
 
 //Port Settings
 app.set('port', (process.env.PORT || 5000));
