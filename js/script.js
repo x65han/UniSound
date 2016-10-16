@@ -7,7 +7,7 @@ var socket,
     current_user_state = 0,
     hard_code_style_length = 0,
     backgroundImageFlashingOrder = 0,
-    channels_participation = [3,4,1,2,5,2,1,3,1,2,4,8,2,2],
+    channels_participation = [3,4,1,2,5,2,1,3,1,2,4,8,2,2,4,1,2,5,2,1,3,1,2,4,8,2,2,4,1,2,5,2,1,3,1,2,4,8,2,2],
     locationManager,chat_environment_color,current_user_channel,username,rainbow, channels=[],channel = '';
 var incomingAudio = new Audio('img/incoming.mp3');
 var outgoingAudio = new Audio('img/outgoing.mp3');
