@@ -35,11 +35,11 @@ function getWeather(coor) {
 			temp = {
 				country: response.city.country == "CA" ? "Canada" : response.city.country,
 				weather: response.list[0].weather[0].main,
+                city: response.city.name,
 				temperature: (response.list[0].main.temp - 273.15).toFixed(1),
 				url: "http://openweathermap.org/img/w/" + response.list[0].weather[0].icon + ".png"
 			};
 			$.getJSON('http://ipinfo.io', function(loc){
-				temp.city = loc.city;
 				temp.province = loc.region;
 				temp.hostname = loc.hostname;
 				temp.ip = loc.ip;
@@ -48,9 +48,14 @@ function getWeather(coor) {
 				createNewChannel(temp.province);
 				createNewChannel(temp.country);
 				createNewChannel(temp.weather);
+                textRazor("Plane Ticket To Boston");
 			});
         }
     });
+}
 
-
+function textRazor(text){
+    $.get(REST + '/razor/' + text, function(data) {
+        console.log(data);
+    });
 }
