@@ -11,7 +11,7 @@ function applyMessageOnUI(messageData){
 function sendMessage(){
     console.log('Checking requirements before sending');
     if($('#message').val().trim() == '')return;
-    if(hackerWatch < 0.5 && hackerWatch != 0){
+    if(hackerWatch < 0.5){
         system(true, "Too Fast");$('#message').val('');return;
     }
     console.log('sending message');
@@ -50,7 +50,7 @@ function establishConnection(){
         if(environmentSetup != 3){
             channels = data;
             environmentSetup++;
-            gettyManager(channels); 
+            gettyManager(channels);
         }
     });
     socket.on('distribute channel message', function(data){
