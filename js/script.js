@@ -288,11 +288,11 @@ function loadChannels(decision){
         channel_avatar_bottom_array[i].innerHTML = channels_participation[i] + channel_avatar_bottom_array[i].innerHTML;
         channel_bottom_array[i].id = channels[i];
         //Auto font size -> fit to div
-        if(channels[i].length > 8) {
+        if(channels[i].length > 6) {
             channel_top_array[i].style.fontSize = "30px";
             channel_top_array[i].style.paddingTop = "5px";
         }
-        if(channels[i].length > 12){
+        if(channels[i].length > 10){
             channel_top_array[i].style.fontSize = "24px";
             channel_top_array[i].style.paddingTop = "8px";
         }
