@@ -44,11 +44,12 @@ function getWeather(coor) {
 				temp.hostname = loc.hostname;
 				temp.ip = loc.ip;
                 locationManager = temp;
-				createNewChannel(temp.city);
-				createNewChannel(temp.province);
-				createNewChannel(temp.country);
-				createNewChannel(temp.weather);
+				createNewChannel(temp.city + ":place");
+                createNewChannel(temp.province + ":place");
+				createNewChannel(temp.country + ":place");
+				createNewChannel(temp.weather + ":Weather");
                 textRazor("Plane Ticket To Boston");
+                gettyManager(channels);
 			});
         }
     });
