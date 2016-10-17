@@ -47,7 +47,20 @@ function establishConnection(){
     });
     socket.on('distribute channels', function(data){
         if(environmentSetup != 3){
-            channels = data;
+            var temp = [];
+            console.log(data);
+            for(var x = 0; x < data.length;x++){
+                if(data[x].includes(':') == false){
+                    console.log("Database: corrupted channel name -> " + data[x]);
+                    continue;
+                }
+                var i = data[x].indexOf(":");
+                var category = data[x].slice(i+1);
+                data[x] = data[x].slice(0,i);
+                if(category.toLowerCase() != "weather") temp.push(data[x]);
+            }
+            console.log(temp);
+            channels = temp;
             environmentSetup++;
             gettyManager(channels);
         }
@@ -59,9 +72,10 @@ function establishConnection(){
 }
 
 function registerUserWithServer(username){
+    console.log("registering: " + username);
     socket.emit('register user', username, function(response){
         sanityCheckUsername = response;
-        console.log(response);
+        console.log("Username Registration Status: " + response);
         if(response == false){
             alert("Username Exist & please try a different Username");
             clearInterval(sanityCheckTimer);
@@ -79,9 +93,10 @@ function createNewChannel(newChannelName){
     }
     if(channels.indexOf(newChannelName) == -1){
         socket.emit("create new channel", newChannelName);
-        channels.push(newChannelName);
+        channels.push(newChannelName.slice(0,newChannelName.indexOf(':')));
         loadChannels(true);
         return;
     }
     console.log("Channels Exists: " + newChannelName);
+    loadChannels(true);
 }
