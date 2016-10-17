@@ -22,6 +22,7 @@ io.on('connection', function(socket){
 	console.log('Connected: %s sockets connected || %s registered users', connections.length, nickname.length);
 	// register users
 	socket.on('register user', function(username, response){
+		console.log("Registering " + username);
         if(nickname.indexOf(username) != -1){
 			response(false);
 		}else{
@@ -79,21 +80,23 @@ io.on('connection', function(socket){
 	        console.log('cannot get messages from: ' + channelRequest);
 	    });
 	});
-	socket.on('create new channel', function(newChannelName, response){
+	socket.on('create new channel', function(fullChannelName, response){
+		var newChannelName = fullChannelName.slice(0,fullChannelName.indexOf(":"));
 		console.log(newChannelName + ' ' + channels.indexOf(newChannelName));
 		if(channels.indexOf(newChannelName) == -1){
 			//Constructing JSON
-			var internalChannelWrapper = {};internalChannelWrapper[getTimeStamp()] = {
+			var internalChannelWrapper = {};
+			var i =
+			internalChannelWrapper[getTimeStamp()] = {
 				"detail" : "Chat " + newChannelName + " created",
 		        "sender" : "UniSound Team"
 		    };
-			ref.child(newChannelName).update(internalChannelWrapper);
+			ref.child(fullChannelName).update(internalChannelWrapper);
 			if(channels.indexOf(newChannelName) == -1)
 				channels.push(newChannelName);
 			console.log("New Channel Created: " + newChannelName);
 			return;
 		}
-		response(true);
 		console.log("Channel Pre-Exists: " + newChannelName);
 	});
 	function requestChannels(){
