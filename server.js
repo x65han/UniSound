@@ -16,7 +16,7 @@ var ref = db.ref("/channels");
 app.use(express.static(__dirname + ''));
 app.set('views', __dirname + '');
 app.set('view engine', 'html');
-// socket
+// web socket
 io.on('connection', function(socket){
 	connections.push(socket);
 	console.log('Connected: %s sockets connected || %s registered users', connections.length, nickname.length);
@@ -111,11 +111,11 @@ io.on('connection', function(socket){
 	    });
 	}
 });
-//REST
+//RESTful APIs
+app.get('/', function(request, response) {response.sendFile(__dirname + '/index.html');});
 app.get('/forceUpdate', function (req, res) {io.emit('force update',true);res.send(true);for(var x=0;x<10;x++)console.log("Force Updating");});
 app.get('/connections', function (req, res) {res.send('Connected: ' + connections.length + ' sockets connected || ' + nickname.length + ' registered users')});
 app.get('/channels', function (req, res) {res.send('Channels:\n ' + channels)});
-app.get('/', function(request, response) {response.sendFile(__dirname + '/index.html');});
 app.get('/getChannelScript', function (req, res) {res.status(200).send(channel_script);});
 app.get('/getRainbowColorArray', function (req, res) {res.status(200).send(rainbow_array);});
 app.get('/getTime', function (req, res) {res.status(200).send(getTimeStamp())});
