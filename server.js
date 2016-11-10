@@ -119,19 +119,13 @@ app.get('/channels', function (req, res) {res.send('Channels:\n ' + channels)});
 app.get('/getChannelScript', function (req, res) {res.status(200).send(channel_script);});
 app.get('/getRainbowColorArray', function (req, res) {res.status(200).send(rainbow_array);});
 app.get('/getTime', function (req, res) {res.status(200).send(getTimeStamp())});
-app.get('/ping', function (req, res) {
-	console.log("System PING!!!!: " + getTimeStamp());
-	res.status(200).send(getTimeStamp());
-});
-//Heroku Constant ping
-setInterval(function(){ pingMaster();}, 1740 * 1000);
-function pingMaster(){
-	console.log("Re-vive Master =-=-=-=-=-");
-	request('https://forcefocus.herokuapp.com/ping', function (error, response, body) {
-		if(response == undefined) console.log("Nobody replies - embarrasement");
-		else console.log(response.toString().length);
+app.get('/resetDB', function (req, res) {
+	console.log('Database Cleared & Reset'); 
+	ref.set({
+		placeholder:'Johnson Han'
 	});
-}
+	res.status(200).send('Delete All Rooms Request Sent');
+}); 
 //Local Data
 // var channels_array = ['Sports','Movie','Food','Finance','Politics','Travel','Cars','Shopping','Career'];
 var channels_array = [];
