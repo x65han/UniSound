@@ -120,12 +120,12 @@ app.get('/getChannelScript', function (req, res) {res.status(200).send(channel_s
 app.get('/getRainbowColorArray', function (req, res) {res.status(200).send(rainbow_array);});
 app.get('/getTime', function (req, res) {res.status(200).send(getTimeStamp())});
 app.get('/resetDB', function (req, res) {
-	console.log('Database Cleared & Reset'); 
+	console.log('Database Cleared & Reset');
 	ref.set({
 		placeholder:'Johnson Han'
 	});
 	res.status(200).send('Delete All Rooms Request Sent');
-}); 
+});
 //Local Data
 // var channels_array = ['Sports','Movie','Food','Finance','Politics','Travel','Cars','Shopping','Career'];
 var channels_array = [];

@@ -57,7 +57,8 @@ function establishConnection(){
                 var i = data[x].indexOf(":");
                 var category = data[x].slice(i+1);
                 data[x] = data[x].slice(0,i);
-                if(category.toLowerCase() != "weather") temp.push(data[x]);
+                if(category.toLowerCase() != "weather" && category.toLowerCase() != "location")
+                    temp.push(data[x]);
             }
             console.log(temp);
             channels = temp;
@@ -91,9 +92,10 @@ function createNewChannel(newChannelName){
     if(newChannelName == null || newChannelName == undefined || newChannelName =="" || typeof newChannelName != typeof "z"){
         return;
     }
-    if(channels.indexOf(newChannelName) == -1){
+    var cleanChannelName = newChannelName.slice(0, newChannelName.indexOf(':'));
+    if(channels.indexOf(cleanChannelName) == -1){
         socket.emit("create new channel", newChannelName);
-        channels.push(newChannelName.slice(0,newChannelName.indexOf(':')));
+        channels.push(cleanChannelName);
         loadChannels(true);
         return;
     }
