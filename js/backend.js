@@ -57,7 +57,8 @@ function establishConnection(){
                 var i = data[x].indexOf(":");
                 var category = data[x].slice(i+1);
                 data[x] = data[x].slice(0,i);
-                if(category.toLowerCase() != "weather" && category.toLowerCase() != "location")
+                if(category.toLowerCase() != "weather")
+                // if(category.toLowerCase() != "weather" && category.toLowerCase() != "location")
                     temp.push(data[x]);
             }
             console.log(temp);
