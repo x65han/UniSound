@@ -92,14 +92,22 @@ body{
 }
 #bubbleCanvas{
 	max-width:100%;
-	/*min-width:600px;*/
 	transition:all 1s ease-out;
 	min-width:100vw;
 	height:100px;
 }
 .username-input{border-radius:16px;width:400px;max-width: 80%;margin-bottom:48px;font-size:36px;background-color:transparent;}
-.container-register-connection{border-top:2px solid red;border-radius:24px;cursor:pointer;}
-.container-register-connection:hover{transform:scale(0.8,0.8);cursor:pointer;}
+#next-button {
+	color: black;
+	border-radius: 3px;
+	border: 2px solid black;
+	background-color: transparent;
+}
+#next-button:hover {
+	color: white;
+	border-radius: 30px;
+	background-color: black;
+}
 .container-channel{
 	z-index:10;cursor:pointer;left:0px;top:0px;
 	background: radial-gradient(#2e3238,#181818);

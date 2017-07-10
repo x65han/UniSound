@@ -18,7 +18,6 @@ function completeSetup(){
     // Local UI setup
     colorChange();
     var backgroundImageFlashing = setInterval(function(){colorChange();}, 5000);
-    applyCanvas();
     googleLocation();
     // Apply channels to UI
     loadChannels(true);
@@ -199,7 +198,6 @@ function colorChange(){
   $(".register-instruction").css('color',rainbow[arrayIncrease(3)]);
   $(".username-input").css('background-color',rainbow[arrayIncrease(3)]);
   $(".username-input").css('color',rainbow[backgroundImageFlashingOrder]);
-  $(".container-register-connection").css('border-top-color',rainbow[arrayIncrease(3)]);
   $(".username-input").css('border-left-color','#181818');
   $(".username-input").css('border-top-color' ,rainbow[arrayIncrease(4)]);
   $(".username-input").css('border-right-color',rainbow[arrayIncrease(5)]);
@@ -213,24 +211,6 @@ function arrayIncrease(increase){
     else return temp
 }
 
-function applyCanvas(){
-    var c_button = document.getElementById('next-button');
-    var ctx_button = c_button.getContext("2d");
-    //gradient color
-    var r = c_button.width / 2;
-    var grd = ctx_button.createLinearGradient(c_button.width/2,c_button.height/2,0,0,c_button.width/2);
-    grd.addColorStop(0, "#2e3238");
-    grd.addColorStop(1, "#181818");
-
-    ctx_button.fillStyle = grd;
-    //Initialize Triangle
-    ctx_button.beginPath();
-    ctx_button.moveTo(0,0);
-    ctx_button.lineTo(c_button.width,0);
-    ctx_button.lineTo(c_button.width / 2, c_button.height);
-    ctx_button.fillstyle = arrayIncrease(3);
-    ctx_button.fill();
-}
 var systemCheckDB = 1.1;
 var systemSpam = 0;
 var systemTimer = setInterval(function(){
