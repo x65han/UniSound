@@ -19,25 +19,23 @@ function googleLocation() {
 }
 function getWeather(coor) {
     "use strict";
-    var weatherUrl = "http://api.openweathermap.org/data/2.5/forecast/weather?",
+    var weatherUrl = "http://api.openweathermap.org/data/2.5/weather?",
         lat = "lat=" + coor.lat + "&",
         lon = "lon=" + coor.long + "&",
-		temp,
-        // appId = "APPID=54b4f28c77ecfb3acd3e3bf77ed99b61",
 		appId = "&appid=815a801f6c245cc890405e836e9b4df5",
-        url = weatherUrl + lat + lon + appId;
-
+        url = weatherUrl + lat + lon + appId,
+        temp;
     $.ajax({
         url: url,
         type: "POST",
         dataType: "jsonp",
         success: function (response) {
 			temp = {
-				country: response.city.country == "CA" ? "Canada" : response.city.country,
-				weather: response.list[0].weather[0].main,
-                city: response.city.name,
-				temperature: (response.list[0].main.temp - 273.15).toFixed(1),
-				url: "http://openweathermap.org/img/w/" + response.list[0].weather[0].icon + ".png"
+				country: response.sys.country == "CA" ? "Canada" : response.city.country,
+				weather: response.weather[0].main,
+                city: response.name,
+				temperature: (response.main.temp - 273.15).toFixed(1),
+				url: "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png"
 			};
 			$.getJSON('http://ipinfo.io', function(loc){
 				temp.province = loc.region;
