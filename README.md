@@ -4,6 +4,8 @@
 - The mission of this application is to connect people around the world by topics
 - You can talk to someone on the other side of world about a topic you are both passionate about
 
+![Game Preview](https://github.com/x65han/unisound/raw/master/gif.gif)
+
 # Technical Overview
 - Check it out at www.UniSoundLive.com & www.GitHub.com/x65han/UniSound
 - Fully functional Topic Based Live chatting Application built with Socket.io and NodeJS
