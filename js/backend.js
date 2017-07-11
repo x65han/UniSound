@@ -93,10 +93,9 @@ function createNewChannel(newChannelName){
     if(newChannelName == null || newChannelName == undefined || newChannelName =="" || typeof newChannelName != typeof "z"){
         return;
     }
-    var cleanChannelName = newChannelName.slice(0, newChannelName.indexOf(':'));
-    if(channels.indexOf(cleanChannelName) == -1){
+    if(channels.indexOf(newChannelName) == -1){
         socket.emit("create new channel", newChannelName);
-        channels.push(cleanChannelName);
+        channels.push(newChannelName);
         loadChannels(true);
         return;
     }

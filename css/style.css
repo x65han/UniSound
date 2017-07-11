@@ -99,6 +99,7 @@ body{
 .username-input{border-radius:16px;width:400px;max-width: 80%;margin-bottom:48px;font-size:36px;background-color:transparent;}
 #next-button {
 	color: black;
+	outline: none;
 	border-radius: 3px;
 	border: 2px solid black;
 	background-color: transparent;

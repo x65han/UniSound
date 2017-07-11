@@ -80,24 +80,23 @@ io.on('connection', function(socket){
 	        console.log('cannot get messages from: ' + channelRequest);
 	    });
 	});
-	socket.on('create new channel', function(fullChannelName, response){
-		var newChannelName = fullChannelName.slice(0,fullChannelName.indexOf(":"));
-		console.log(newChannelName + ' ' + channels.indexOf(newChannelName));
-		if(channels.indexOf(newChannelName) == -1){
+	socket.on('create new channel', function(channelName, response){
+		console.log(channelName + ' ' + channels.indexOf(channelName));
+		if(channels.indexOf(channelName) == -1){
 			//Constructing JSON
 			var internalChannelWrapper = {};
 			var i =
 			internalChannelWrapper[getTimeStamp()] = {
-				"detail" : "Chat " + newChannelName + " created",
+				"detail" : "Chat " + channelName + " created",
 		        "sender" : "UniSound Team"
 		    };
-			ref.child(fullChannelName).update(internalChannelWrapper);
-			if(channels.indexOf(newChannelName) == -1)
-				channels.push(newChannelName);
-			console.log("New Channel Created: " + newChannelName);
+			ref.child(channelName).update(internalChannelWrapper);
+			if(channels.indexOf(channelName) == -1)
+				channels.push(channelName);
+			console.log("New Channel Created: " + channelName);
 			return;
 		}
-		console.log("Channel Pre-Exists: " + newChannelName);
+		console.log("Channel Pre-Exists: " + channelName);
 	});
 	function requestChannels(){
 		ref.on("value",function(snapshot){
