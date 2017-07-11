@@ -47,22 +47,8 @@ function establishConnection(){
     });
     socket.on('distribute channels', function(data){
         if(environmentSetup != 3){
-            var temp = [];
-            console.log(data);
-            for(var x = 0; x < data.length;x++){
-                if(data[x].includes(':') == false){
-                    console.log("Database: corrupted channel name -> " + data[x]);
-                    continue;
-                }
-                var i = data[x].indexOf(":");
-                var category = data[x].slice(i+1);
-                data[x] = data[x].slice(0,i);
-                if(category.toLowerCase() != "weather")
-                // if(category.toLowerCase() != "weather" && category.toLowerCase() != "location")
-                    temp.push(data[x]);
-            }
-            console.log(temp);
-            channels = temp;
+            console.log('ČCČ:', data);
+            channels = data;
             environmentSetup++;
             gettyManager(channels);
         }

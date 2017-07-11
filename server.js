@@ -65,10 +65,13 @@ io.on('connection', function(socket){
 	});
 	socket.on('request channels', function(name){
 		ref.on("value",function(snapshot){
-	        var internal_channels = [];
-	        for(var one in snapshot.val()) internal_channels.push(one);
-			channels = internal_channels;
-			socket.emit('distribute channels',internal_channels);
+	        var t = [];
+	        for(var one in snapshot.val()) {
+				if (one == 'placeholder') continue;
+				t.push(one);
+			}
+			channels = t;
+			socket.emit('distribute channels', t);
 	    },function(errorObject) {
 	        console.log("The read failed: " + errorObject.code);
 	    });
