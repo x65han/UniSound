@@ -7,7 +7,7 @@
 ![Game Preview](https://github.com/x65han/unisound/raw/master/gif.gif)
 
 # Technical Overview
-- Check it out at www.UniSoundLive.com & www.GitHub.com/x65han/UniSound
+- Check it out at http://unisoundlive.herokuapp.com/ & www.GitHub.com/x65han/UniSound
 - Fully functional Topic Based Live chatting Application built with Socket.io and NodeJS
 - Each user will have customized topics based on their location, interests and even create a new trending topic
 - Project is deployed on Heroku with Firebase Cloud Storage
